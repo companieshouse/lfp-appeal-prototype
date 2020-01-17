@@ -1,4 +1,53 @@
 module.exports = function (router) {
+  router.get('/personal/personal-reason', function (req, res) {
+    var id = 0
+    var info = ''
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].personalReason
+      res.render('personal/personal-reason', {
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('personal/personal-reason')
+    }
+  })
+  router.post('/personal/personal-reason', function (req, res) {
+    var personalReason = req.body.personalReason
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+
+    if (personalReason === '') {
+      Err.type = 'blank'
+      Err.text = 'You must tell us more information'
+      Err.href = '#personal-information'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('personal/personal-information', {
+        errorList: errorList,
+        Err: Err
+      })
+    } else {
+      if (req.body.editId !== '') {
+        req.session.appealReasons[editId].personalReason = personalReason
+        res.redirect('/check-your-answers')
+      } else {
+        var reasonObject = req.session.appealReasons.pop()
+        reasonObject.personalReason = req.body.personalReason
+        reasonObject.nextStep = '/personal/personal-information'
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/personal/personal-information')
+      }
+    }
+  })
   router.get('/personal/personal-information', function (req, res) {
     var id = 0
     var info = ''
