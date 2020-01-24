@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  {% if errorList.length > 0 %}
+    Error:
+  {% endif %}
+  Appeal due to ill health: Which director was ill?
+{% endblock %}
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+  tag: {
+    text: "alpha"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/illness/who-was-ill"
+}) }}
+{% endblock %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="post">
+
+        {% if errorList.length > 0 %}
+          {{ govukErrorSummary({
+                titleText: "There is a problem",
+                errorList: errorList
+              }) }}
+        {% endif %}
+
+        {% if errorList.length > 0 %}
+          {% set illDirectorError = {
+            text: illDirectorErr.text
+          } %}
+        {% else %}
+          {% set illDirectorError = false %}
+        {% endif %}
+
+        {% if errorList.length > 0 %}
+          {% if otherDirectorErr.type === 'invalid' %}
+            {% set otherDirectorError = true %}
+          {% else %}
+            {% set otherDirectorError = false %}
+          {% endif %}
+        {% endif %}
+
+        {% set otherDirectorInput %}
+        {{ govukInput({
+              id: "other-director",
+              name: "otherDirector",
+              checked: otherDirector,
+              classes: "",
+              errorMessage: otherDirectorError,
+              label: {
+                text: "Name of the director"
+              }
+            }) }}
+        {% endset -%}
+
+        {% set directorsArray = [] %}
+        {% for director in scenario.company.directors %}
+          {% set directorsArray = (directorsArray.push({value: director, html: director, checked: false}), directorsArray) %}
+        {% endfor %}
+
+        {% for director in scenario.company.directors %}
+          {{ director }}
+        {% endfor %}
+
+        {{ govukRadios({
+              idPrefix: "ill-director",
+                name: "illDirector",
+                errorMessage: illDirectorError,
+                fieldset: {
+                  legend: {
+                    text: 'Who was ill?',
+                    isPageHeading: true,
+                    classes: 'govuk-fieldset__legend--xl'
+                  }
+                },
+                items: directorsArray
+              }) }}
+
+        {{ govukInput({
+                id: "editId",
+                name: "editId",
+                type: "hidden",
+                value: id
+              }) }}
+
+        {{ govukButton({
+              text: "Continue"
+            }) }}
+
+        <p>
+          <a href="/sign-out" class="govuk-link">Save and sign out</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

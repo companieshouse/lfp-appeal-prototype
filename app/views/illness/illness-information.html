@@ -27,6 +27,14 @@
         errorList: errorList
       }) }}
       {% endif %}
+      {% set multipleDirectorsHTML %}
+      {% if scenario.company.director !== 1 %}
+        Inlcude why the other directors were not able to file.
+      {% else %}
+      {% endif %}
+      Anything you tell us to support your application will be kept confidential.
+      {% endset %}
+
       <h1 class="govuk-heading-xl">How did this affect your ability to file on time?</h1>
       <form action="" method="post">
         {% if Err.flag %}
@@ -35,8 +43,8 @@
               id: "illness-information",
               rows: '8',
               label: {
-                text: "Anything you tell us to support your application will be kept confidential.",
-                isPageHeading: true,
+                html: multipleDirectorsHTML,
+                isPageHeading: false,
                 classes: 'govuk-heading-large'
               },
               errorMessage: {
@@ -50,7 +58,7 @@
               value: info,
               rows: '8',
               label: {
-                text: "Anything you tell us to support your application will be kept confidential.",
+                text: multipleDirectorsHTML,
                 isPageHeading: true,
                 classes: 'govuk-heading-large'
               }

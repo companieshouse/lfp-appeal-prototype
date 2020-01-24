@@ -2,7 +2,14 @@ module.exports = {
   company: {
     name: 'BATTERSEA POWER LIMITED',
     number: '00345567',
-    authCode: 'BPL00345567'
+    authCode: 'BPL00345567',
+    directors: [
+      'John Smith',
+      'Jane Smith',
+      'Joe Smith',
+      'Janet Smith',
+      'Jade Smith'
+    ]
   },
   penalties: [
     {
