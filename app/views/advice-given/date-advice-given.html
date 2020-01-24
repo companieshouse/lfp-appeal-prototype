@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  {% if errorList.length > 0 %}
+    Error:
+  {% endif %}
+  Appealing due to company change: Tell us when the advice was given
+{% endblock %}
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+  tag: {
+    text: "alpha"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "contact-information"
+}) }}
+{% endblock %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="post">
+        {% if errorList.length > 0 %}
+          {{ govukErrorSummary({
+            titleText: "There was a problem with the date you gave us",
+            errorList: errorList
+          }) }}
+        {% endif %}
+
+        {% if errorList.length > 0 %}
+          {% set adviceGivenDateError = {
+            text: adviceGivenDateErr.text
+          } %}
+        {% else %}
+          {% set adviceGivenDateError = false %}
+        {% endif %}
+
+        {% set hintHTML %}
+        For example, 31 8 2018
+        {% endset -%}
+
+        {{ govukDateInput({
+          id: "advice-given-date",
+          namePrefix: "adviceGivenDate",
+          value: info,
+          errorMessage: adviceGivenDateError,
+          fieldset: {
+            legend: {
+              text: "When was the advice given?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+            }
+          },
+          hint: {
+                html: hintHTML
+              },
+                items: [
+                    {
+                      classes: "govuk-input--width-2",
+                      name: "day",
+                      value: adviceGivenDate.day
+                    },
+                    {
+                      classes: "govuk-input--width-2",
+                      name: "month",
+                      value: adviceGivenDate.month
+                    },
+                    {
+                      classes: "govuk-input--width-4",
+                      name: "year",
+                      value: adviceGivenDate.year
+                    }
+            ]
+          })
+        }}
+        {{ govukInput({
+          id: "editId",
+          name: "editId",
+          type: "hidden",
+          value: id
+        }) }}
+
+        {{ govukButton({
+         text: "Continue"
+        }) }}
+        <p>
+          <a href="/sign-out" class="govuk-link">Save and sign out</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
