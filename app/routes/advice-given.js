@@ -56,7 +56,7 @@ router.post('/advice-given/contact-information', function (req, res) {
   })
 
 router.post('/advice-given/contact-information', function (req, res) {
-    var contactInformation = req.body.contactInformation
+    var servicenformation = req.body.contactInformation
     var editId = req.body.editId
     var errorFlag = false
     var Err = {}
@@ -65,7 +65,7 @@ router.post('/advice-given/contact-information', function (req, res) {
 
     if (contactInformation === '') {
       Err.type = 'blank'
-      Err.text = 'You must provide us with detials of who you contacted'
+      Err.text = 'You must provide us with details of who you contacted'
       Err.href = '#contactInformation'
       Err.flag = true
     }
@@ -81,6 +81,36 @@ router.post('/advice-given/contact-information', function (req, res) {
         res.redirect('/advice-given/date-advice-given')
     }
   })
+
+
+
+router.post('/advice-given/service-information', function (req, res) {
+    var serviceInformation = req.body.serviceInformation
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+
+
+    if (typeof serviceInformation === 'undefined') {
+      Err.type = 'blank'
+      Err.text = 'You must provide us with details of the service used'
+      Err.href = '#serviceInformation'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('advice-given/service-information', {
+        errorList: errorList,
+        Err: Err })
+    } else {
+        res.redirect('/advice-given/more-information')
+    }
+  })
+
 
 
 
@@ -154,5 +184,37 @@ router.post('/advice-given/date-advice-given', function (req, res) {
     }
   })
 
+
+  router.post('/advice-given/more-information', function (req, res) {
+    var moreInformation = req.body.moreInformation
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+
+    if (moreInformation === '') {
+      Err.type = 'blank'
+      Err.text = 'You must tell us more information'
+      Err.href = '#more-information'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('advice-given/more-information', {
+        errorList: errorList,
+        Err: Err
+      })
+    } else {
+      if (req.body.editId !== '') {
+        req.session.appealReasons[editId].moreInformation = moreInformation
+        res.redirect('/check-your-answers')
+      } else {
+        res.redirect('/evidence')
+      }
+    }
+  })
 
 }

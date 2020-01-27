@@ -27,34 +27,103 @@
         errorList: errorList
       }) }}
       {% endif %}
-      <h1 class="govuk-heading-xl">Which service? Webfiling, e-filing...</h1>
       <form action="" method="post">
         {% if Err.flag %}
-          {{ govukTextarea({
-              name: "serviceInformation",
-              id: "service-information",
-              rows: '3',
-              label: {
-                text: "Anything you tell us to support your appeal will be kept confidential.",
+
+          {% set textHtml %}
+          {{ govukInput({
+            id: "service-information-other",
+            name: "serviceInformationOther",
+            type: "tel",
+            classes: "govuk-!-width-one-third",
+            label: {
+              text: "Service Name"
+            }
+          }) }}
+          {% endset -%}
+
+          {{ govukRadios({
+            idPrefix: "service-information",
+            name: "serviceInformation",
+            fieldset: {
+              legend: {
+                text: "What service did you use?",
                 isPageHeading: true,
-                classes: 'govuk-heading-large'
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            errorMessage: {text: "You must select the service you used"},
+            hint: {
+              text: "Select one option."
+            },
+            items: [
+              {
+                value: "companies-house-service",
+                text: "Companies House Service"
               },
-              errorMessage: {
-                text: "Enter information"
+              {
+                value: "webfiling",
+                text: "Web Filing"
+              },
+              {
+                value: "other",
+                text: "Other",
+                conditional: {
+                  html: textHtml
+                }
               }
-            }) }}
+            ]
+          }) }}
+       
         {% else %}
-          {{ govukTextarea({
-              name: "serviceInformation",
-              id: "service-information",
-              value: info,
-              rows: '3',
-              label: {
-                text: "Anything you tell us to support your appeal will be kept confidential.",
+
+
+          {% set textHtml %}
+          {{ govukInput({
+            id: "service-information-other",
+            name: "serviceInformationOther",
+            type: "tel",
+            classes: "govuk-!-width-one-third",
+            label: {
+              text: "Service Name"
+            }
+          }) }}
+          {% endset -%}
+
+          {{ govukRadios({
+            idPrefix: "service-information",
+            name: "serviceInformation",
+            fieldset: {
+              legend: {
+                text: "How would you prefer to be contacted?",
                 isPageHeading: true,
-                classes: 'govuk-heading-large'
+                classes: "govuk-fieldset__legend--xl"
               }
-            }) }}
+            },
+            hint: {
+              text: "Select one option."
+            },
+            items: [
+              {
+                value: "companies-house-service",
+                text: "Companies House Service"
+              },
+              {
+                value: "webfiling",
+                text: "Web Filing"
+              },
+              {
+                value: "other",
+                text: "Other",
+                conditional: {
+                  html: textHtml
+                }
+              }
+            ]
+          }) }}
+          
+  
+              
         {% endif %}
 
         {{ govukInput({
