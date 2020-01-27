@@ -38,7 +38,7 @@ router.post('/advice-given/contact-information', function (req, res) {
 
     if (contactInformation === '') {
       Err.type = 'blank'
-      Err.text = 'You must provide us with detials of who you contacted'
+      Err.text = 'You must provide us with contact information'
       Err.href = '#contactInformation'
       Err.flag = true
     }
