@@ -64,7 +64,6 @@ module.exports = function (router) {
     var editId = req.body.editId
     var errorFlag = false
     var appealReasonErr = {}
-    var otherReasonErr = {}
     var errorList = []
     reasonObject.documents = []
 

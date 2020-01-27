@@ -273,13 +273,13 @@ rows: [
 }) }}
 
           {% elif reason.reason === 'personal' %}
-            <h3 class="govuk-heading-m">{{appealListIndex}}Personal circumstances</h3>
+            <h3 class="govuk-heading-m">{{appealListIndex}}Personal reasons: {{ reason.personalReason }}</h3>
 
             {{ govukSummaryList({
 rows: [
   {
     key: {
-      text: "Personal circumstance"
+      text: "Personal reason"
     },
     value: {
       html: reason.personalReason | capitalize
@@ -289,7 +289,7 @@ rows: [
         {
           href: "/personal/personal-information?id=" + loop.index0,
           text: "Change",
-          visuallyHiddenText: "personal circumstance"
+          visuallyHiddenText: "personal reason"
         }
       ]
     }

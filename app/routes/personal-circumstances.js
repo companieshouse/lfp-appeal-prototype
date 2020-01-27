@@ -2,11 +2,42 @@ module.exports = function (router) {
   router.get('/personal/personal-reason', function (req, res) {
     var id = 0
     var info = ''
+    var reasonObject = {}
+    var checkedFinancial = false
+    var checkedBereavement = false
+    var checkedMentalHealth = false
+    var checkedHousing = false
+    var checkedOther = false
+
     if (req.query.id) {
       id = req.query.id
       info = req.session.appealReasons[id].personalReason
+      console.log(req.session.appealReasons)
+      reasonObject = req.session.appealReasons[id]
+      switch (reasonObject.reason) {
+        case 'financial':
+          checkedFinancial = true
+          break
+        case 'bereavement':
+          checkedBereavement = true
+          break
+        case 'mentalHealth':
+          checkedMentalHealth = true
+          break
+        case 'housing':
+          checkedHousing = true
+          break
+        case 'other':
+          checkedOther = true
+          break
+      }
       res.render('personal/personal-reason', {
         id: id,
+        checkedFinancial: checkedFinancial,
+        checkedBereavement: checkedBereavement,
+        checkedMentalHealth: checkedMentalHealth,
+        checkedHousing: checkedHousing,
+        checkedOther: checkedOther,
         info: info
       })
     } else {
@@ -14,16 +45,16 @@ module.exports = function (router) {
     }
   })
   router.post('/personal/personal-reason', function (req, res) {
+    var reasonObject = {}
     var personalReason = req.body.personalReason
-    var editId = req.body.editId
     var errorFlag = false
     var Err = {}
     var errorList = []
 
     if (personalReason === '') {
       Err.type = 'blank'
-      Err.text = 'You must tell us more information'
-      Err.href = '#personal-information'
+      Err.text = 'You must tell the type of personal reason'
+      Err.href = '#personal-reason'
       Err.flag = true
     }
     if (Err.flag) {
@@ -31,20 +62,21 @@ module.exports = function (router) {
       errorFlag = true
     }
     if (errorFlag === true) {
-      res.render('personal/personal-information', {
+      res.render('personal/personal-reason', {
         errorList: errorList,
         Err: Err
       })
     } else {
-      if (req.body.editId !== '') {
-        req.session.appealReasons[editId].personalReason = personalReason
-        res.redirect('/check-your-answers')
-      } else {
-        var reasonObject = req.session.appealReasons.pop()
-        reasonObject.personalReason = req.body.personalReason
-        reasonObject.nextStep = '/personal/personal-information'
+      reasonObject = req.session.appealReasons.pop()
+      reasonObject.personalReason = req.body.personalReason
+      if (req.body.personalReason === 'bereavement') {
+        reasonObject.nextStep = '/personal/bereavement/relationship-to-company'
         req.session.appealReasons.push(reasonObject)
-        res.redirect('/personal/personal-information')
+        res.redirect('/personal/bereavement/relationship-to-company')
+      } else {
+        reasonObject.nextStep = '/personal/issue-start-date'
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/personal/issue-start-date')
       }
     }
   })
