@@ -174,6 +174,63 @@
             {% endif %}
             {% endset %}
 
+            {% if reason.illDirector !== '' %}
+              {% set illDirectorHTML = {
+            key: {
+              text: "Name of director"
+            },
+            value: {
+              html: reason.illDirector
+            },
+            actions: {
+              items: [
+                {
+                  href: "/illness/ill-director?id=" + loop.index0,
+                  text: "Change",
+                  visuallyHiddenText: "ill director"
+                }
+              ]
+            }
+          }
+            %}
+            {% endif %}
+
+            {% if reason.familyMember !== '' %}
+              {% set illFamilyHTML = {
+            key: {
+              text: "Name of director related to the family member"
+            },
+            value: {
+              html: reason.illFamily
+            },
+            actions: {
+              items: [
+                {
+                  href: "/illness/family-member?id=" + loop.index0,
+                  text: "Change",
+                  visuallyHiddenText: "family members"
+                }
+              ]
+          },
+          key: {
+            text: "Relationship"
+          },
+          value: {
+            html: reason.familyRelationship
+          },
+          actions: {
+            items: [
+              {
+                href: "/illness/family-relationship?id=" + loop.index0,
+                text: "Change",
+                visuallyHiddenText: "relationship"
+              }
+            ]
+          }
+        }
+            %}
+            {% endif %}
+
             {% if reason.continuedIllness === 'yes' %}
               {% set endDateHTML = {
             key: {
@@ -233,6 +290,7 @@ rows: [
       ]
     }
   },
+    illDirectorHTML,
   {
     key: {
       text: "Illness start date"
@@ -432,6 +490,40 @@ rows: [
 
             {{ govukSummaryList({
 rows: [
+{
+  key: {
+    text: "Third party accountant or agent?"
+  },
+  value: {
+    html: reason.thirdParty
+  },
+  actions: {
+    items: [
+      {
+        href: "accounts/third-party/?id=" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "third party accountant or agent"
+      }
+    ]
+  }
+},
+{
+  key: {
+    text: "Name of accountant or agent"
+  },
+  value: {
+    html: reason.accountsName
+  },
+  actions: {
+    items: [
+      {
+        href: "accounts/accounts-name/?id=" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "Name of accountant or agent"
+      }
+    ]
+  }
+},
   {
     key: {
       text: "Date issue happened"

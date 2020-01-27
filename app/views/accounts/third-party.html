@@ -38,18 +38,15 @@
       <form action="" method="post">
         {{ govukRadios({
               classes: "govuk-radios--inline",
-              idPrefix: "provide-detail",
-              name: "provideDetail",
-              errorMessage: provideDetailError,
+              idPrefix: "third-party",
+              name: "thirdParty",
+              errorMessage: thirdPartyError,
               fieldset: {
                 legend: {
-                  text: 'Do you want to tell us about the illness?',
+                  text: 'Was the accounting issue with a third party accountant or agent?',
                   isPageHeading: true,
                   classes: 'govuk-fieldset__legend--xl'
                 }
-              },
-              hint: {
-                html: hintHTML
               },
               items: [
                 {
@@ -65,6 +62,13 @@
 
         {{ govukButton({
               text: "Continue"
+            }) }}
+
+        {{ govukInput({
+              id: "edit-id",
+              name: "editId",
+              type: "hidden",
+              value: id
             }) }}
       </form>
     </div>

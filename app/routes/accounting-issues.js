@@ -1,4 +1,92 @@
 module.exports = function (router) {
+  router.get('/accounts/third-party', function (req, res) {
+    var reasonObject = {}
+    var id = 0
+    var info = ''
+
+    reasonObject = req.session.appealReasons.pop()
+    req.session.appealReasons.push(reasonObject)
+
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].thirdParty
+      res.render('accounts/third-party', {
+        reason: reasonObject,
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('accounts/third-party', {
+        info: info,
+        scenario: req.session.scenario,
+        reason: reasonObject
+      })
+    }
+  })
+  router.post('/accounts/third-party', function (req, res) {
+    var thirdParty = req.body.thirdParty
+    var editId = req.body.editId
+    var reasonObject = {}
+    reasonObject.thirdParty = req.body.thirdParty
+
+    if (req.body.editId !== '') {
+      reasonObject = req.session.appealReasons[editId]
+    } else {
+      console.log('popHere1')
+      reasonObject = req.session.appealReasons.pop()
+    }
+    if (req.body.editId !== '') {
+      req.session.appealReasons[editId].thirdParty = thirdParty
+      res.redirect('/check-your-answers')
+    } else {
+      reasonObject.thirdParty = thirdParty
+      reasonObject.nextStep = 'accounts/accounts-name'
+      req.session.appealReasons.push(reasonObject)
+      res.redirect('/accounts/accounts-name')
+    }
+  })
+  router.get('/accounts/accounts-name', function (req, res) {
+    var reasonObject = {}
+    var id = 0
+    var info = ''
+
+    reasonObject = req.session.appealReasons.pop()
+    req.session.appealReasons.push(reasonObject)
+
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].accountsName
+      res.render('accounts/accounts-name', {
+        reason: reasonObject,
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('accounts/accounts-name', {
+        reason: reasonObject
+      })
+    }
+  })
+  router.post('/accounts/accounts-name', function (req, res) {
+    var editId = req.body.editId
+    var reasonObject = {}
+    var accountsName = req.body.accountsName
+
+    if (req.body.editId !== '') {
+      reasonObject = req.session.appealReasons[editId]
+    } else {
+      reasonObject = req.session.appealReasons.pop()
+    }
+    if (req.body.editId !== '') {
+      req.session.appealReasons[editId].accountsName = accountsName
+      res.redirect('/check-your-answers')
+    } else {
+      reasonObject.accountsName = accountsName
+      reasonObject.nextStep = 'accounts/accounts-date'
+      req.session.appealReasons.push(reasonObject)
+      res.redirect('/accounts/accounts-date')
+    }
+  })
   router.get('/accounts/accounts-date', function (req, res) {
     var currentReason = {}
     var inputClasses = {}

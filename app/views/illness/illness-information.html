@@ -27,12 +27,12 @@
         errorList: errorList
       }) }}
       {% endif %}
+
       {% set multipleDirectorsHTML %}
-      {% if scenario.company.director !== 1 %}
-        Inlcude why the other directors were not able to file.
-      {% else %}
+
+      {% if reason.illDirector !== '' %}
+        Include why the other directors were not able to file.
       {% endif %}
-      Anything you tell us to support your application will be kept confidential.
       {% endset %}
 
       <h1 class="govuk-heading-xl">How did this affect your ability to file on time?</h1>
@@ -43,7 +43,7 @@
               id: "illness-information",
               rows: '8',
               label: {
-                html: multipleDirectorsHTML,
+                html: "Anything you tell us to support your application will be kept confidential.",
                 isPageHeading: false,
                 classes: 'govuk-heading-large'
               },
@@ -58,9 +58,12 @@
               value: info,
               rows: '8',
               label: {
-                text: multipleDirectorsHTML,
-                isPageHeading: true,
+                text: "Anything you tell us to support your application will be kept confidential.",
+                isPageHeading: false,
                 classes: 'govuk-heading-large'
+              },
+              hint: {
+                html: multipleDirectorsHTML
               }
             }) }}
         {% endif %}

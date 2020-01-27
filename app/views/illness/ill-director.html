@@ -65,10 +65,6 @@
           {% set directorsArray = (directorsArray.push({value: director, html: director, checked: false}), directorsArray) %}
         {% endfor %}
 
-        {% for director in scenario.company.directors %}
-          {{ director }}
-        {% endfor %}
-
         {{ govukRadios({
               idPrefix: "ill-director",
                 name: "illDirector",
@@ -79,6 +75,9 @@
                     isPageHeading: true,
                     classes: 'govuk-fieldset__legend--xl'
                   }
+                },
+                hint: {
+                  text: 'These were the active directors when your accounts were due'
                 },
                 items: directorsArray
               }) }}

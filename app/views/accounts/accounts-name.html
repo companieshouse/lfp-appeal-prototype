@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appeal due to ill health: ill family member
+  Appeal due to accounting issues: name of accountant
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
@@ -15,14 +15,13 @@
 }) }}
   {{ govukBackLink({
   text: "Back",
-  href: "/illness/who-was-ill"
+  href: "/accounts/accounts-name"
 }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="post">
-
         {% if errorList.length > 0 %}
           {{ govukErrorSummary({
             titleText: "There is a problem with the information you entered",
@@ -38,27 +37,17 @@
           {% set Error = false %}
         {% endif %}
 
-        {% set directorsArray = [] %}
-        {% for director in scenario.company.directors %}
-          {% set directorsArray = (directorsArray.push({value: director, html: director, checked: false}), directorsArray) %}
-        {% endfor %}
-
-        {{ govukCheckboxes({
-              idPrefix: "ill-family",
-                name: "illFamily",
-                errorMessage: illDirectorError,
-                fieldset: {
-                  legend: {
-                    text: 'Who was the family member related to?',
-                    isPageHeading: true,
-                    classes: 'govuk-fieldset__legend--xl'
-                  }
-                },
-                hint: {
-                  text: 'These were the active directors when your accounts were due'
-                },
-                items: directorsArray
-              }) }}
+        {{ govukInput({
+          id: "accounts-name",
+          name: "accountsName",
+          errorMessage: Error,
+          label: {
+            text: "What was the name of the accountant or firm?",
+            classes: "govuk-label--xl",
+            isPageHeading: true
+          },
+          value: accountsName
+        }) }}
 
         {{ govukInput({
           id: "edit-id",
