@@ -1,6 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
+/* router.all('*', function (req, res, next) {
+  console.log(req.session.signoutFlag)
+  console.log(req.session.signoutCounter)
+  if (req.session.signoutFlag === true) {
+    if (req.session.signoutCounter === 0) {
+      req.session.signoutCounter++
+      next()
+    } else {
+      req.session.signoutFlag = false
+      req.session.signoutCounter = false
+      res.redirect('/sign-out')
+    }
+  } else {
+    next()
+  }
+})
+*/
+
 // Service Core Routes
 require('./routes/core-service.js')(router)
 

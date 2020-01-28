@@ -1,4 +1,3 @@
-const fs = require('graceful-fs')
 const postmark = require('postmark')
 
 module.exports = function (router) {
@@ -286,6 +285,17 @@ module.exports = function (router) {
       appealLength: req.session.appealLength,
       userEmail: req.session.userEmail
     })
+  })
+  router.get('/set-signout-flag', function (req, res) {
+    req.session.signoutFlag = true
+    var application = {}
+    // var json = ''
+
+    application.userEmail = req.session.userEmail
+    application.scenario = req.session.scenario
+    application.appealReasons = req.session.appealReasons
+    // json = JSON.stringify(application, null, '\t')
+    res.send(JSON.stringify(application))
   })
   router.get('/get-session', function (req, res) {
     var application = {}

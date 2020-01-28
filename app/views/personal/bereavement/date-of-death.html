@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appeal due to ill health: Tell us when the illness started
+  Appeal due to personal reasons: When did the person die?
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
@@ -15,18 +15,19 @@
 }) }}
   {{ govukBackLink({
   text: "Back",
-  href: "/illness/who-was-ill"
+  href: "/personal/personal-reason"
 }) }}
 {% endblock %}
 {% block content %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="/illness/illness-start-date" method="post">
+      <form action="" method="post">
         {% if errorList.length > 0 %}
           {{ govukErrorSummary({
-                titleText: "There was a problem with the date you gave us",
-                errorList: errorList
-              }) }}
+              titleText: "There was a problem with the date you gave us",
+              errorList: errorList
+            }) }}
         {% endif %}
 
         {% if errorList.length > 0 %}
@@ -38,13 +39,13 @@
         {% endif %}
 
         {{ govukDateInput({
-            id: "illness-start",
-            namePrefix: "illnessStart",
+            id: "date-of-death",
+            namePrefix: "dateOfDeath",
             value: info,
-            errorMessage: startDateError,
+            errorMessage: dateOfDeathError,
             fieldset: {
               legend: {
-                text: "When did the illness start?",
+                text: "When did the person die?",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--xl"
               }
@@ -56,32 +57,32 @@
               {
                 classes: inputClasses.day,
                 name: 'day',
-                value: illnessStartDay
+                value: dateOfDeathDay
               },
               {
                 classes: inputClasses.month,
                 name: 'month',
-                value: illnessStartMonth
+                value: dateOfDeathMonth
               },
               {
                 classes: inputClasses.year,
                 name: 'year',
-                value: illnessStartYear
+                value: dateOfDeathYear
               }
             ]
           })
-          }}
+        }}
 
         {{ govukInput({
-            id: "editId",
-            name: "editId",
-            type: "hidden",
-            value: id
-          }) }}
+          id: "editId",
+          name: "editId",
+          type: "hidden",
+          value: id
+        }) }}
 
         {{ govukButton({
-             text: "Continue"
-            }) }}
+           text: "Continue"
+          }) }}
         <p>
           <a href="/sign-out" class="govuk-link">Save and sign out</a>
         </p>
