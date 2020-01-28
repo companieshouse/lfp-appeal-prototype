@@ -64,7 +64,6 @@ module.exports = function (router) {
     var editId = req.body.editId
     var errorFlag = false
     var appealReasonErr = {}
-    var otherReasonErr = {}
     var errorList = []
     reasonObject.documents = []
 
@@ -102,19 +101,28 @@ module.exports = function (router) {
           if (editId !== '') {
             req.session.appealReasons[editId].reason = reasonObject.reason
           } else {
-            reasonObject.nextStep = '/personal/personal-information'
+            reasonObject.nextStep = '/personal/personal-reason'
             req.session.appealReasons.push(reasonObject)
           }
-          res.redirect('/personal/personal-information')
+          res.redirect('/personal/personal-reason')
           break
         case 'rejectedAccounts':
           if (editId !== '') {
             req.session.appealReasons[editId].reason = reasonObject.reason
           } else {
-            reasonObject.nextStep = '/accounts/accounts-date'
+            reasonObject.nextStep = '/rejected-accounts/rejected-accounts-information'
             req.session.appealReasons.push(reasonObject)
           }
-          res.redirect('/accounts/accounts-date')
+          res.redirect('/rejected-accounts/rejected-accounts-information')
+          break
+        case 'accounts':
+          if (editId !== '') {
+            req.session.appealReasons[editId].reason = reasonObject.reason
+          } else {
+            reasonObject.nextStep = '/accounts/third-party'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/accounts/third-party')
           break
         case 'disaster':
           if (editId !== '') {

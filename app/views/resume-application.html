@@ -22,13 +22,12 @@
         You've already started an application for
         {{ scenario.company.name }}
       </h1>
-      <p class="govuk-body-l">You started this application on
-        {{ scenario.company.startDate }}</p>
+      <p class="govuk-body-l">You started this application on 28 January 2020</p>
 
       <form action="" method="post">
         {{ govukButton({
-        text: "Continue application"
-      }) }}
+          text: "Continue application"
+        }) }}
         <p>
           <a href="choose-reason?restart=yes" class="govuk-link">Start a new application</a>
         </p>
