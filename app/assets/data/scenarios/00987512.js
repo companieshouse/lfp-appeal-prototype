@@ -2,7 +2,9 @@ module.exports = {
   company: {
     name: 'KEYSTONE CONSTRUCTION LIMITED',
     number: '00987512',
-    authCode: 'KCL00987512'
+    authCode: 'KCL00987512',
+    director: 1,
+    directorName1: 'John Smith'
   },
   penalties: [
     {

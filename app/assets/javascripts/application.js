@@ -45,16 +45,17 @@ $(document).ready(function () {
   $('a[href="/sign-out"]').click(function () {
     var application = ''
 
-    $.get('/get-session').done(function (data) {
+    $.get('/set-signout-flag').done(function (data) {
       application = JSON.parse(data, null, '\t')
       console.log(application)
       localStorage.setItem('application' + application.scenario.company.number, data)
-      window.location.replace('/sign-out')
+      $('form[method="post"]').submit()
     })
     return false
   })
 
   $('.session-check').click(function () {
+    console.log($('.govuk-input--company-number').val())
     var companyNumber = ''
     var application = ''
 
@@ -62,14 +63,13 @@ $(document).ready(function () {
       companyNumber = $('.govuk-input--company-number').val()
       if (localStorage.getItem('application' + companyNumber) !== null) {
         application = localStorage.getItem('application' + companyNumber)
-        $.get('/set-session', {application: application}).done(function (data) {
+        $.get('/set-session', { application: application }).done(function (data) {
           // console.log(application)
           window.location = '/resume-application'
           return false
         })
       } else {
         $('#companyForm').submit()
-        return false
       }
     }
   })

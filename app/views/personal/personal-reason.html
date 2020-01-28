@@ -20,12 +20,6 @@
 {% endblock %}
 {% block content %}
 
-  {% set otherHTML %}
-  <div class="govuk-inset-text">
-    <a href="https://www.gov.uk/government/publications/late-filing-penalties/late-filing-penalties#appealing">Read the guidance</a>
-    to find out what reasons are unlikely to be successful.
-  </div>
-  {% endset %}
   <div class="govuk-grid-row" ="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="post">
@@ -55,52 +49,39 @@
 
         {{ govukRadios({
           idPrefix: "choose-reason",
-          name: "appealReason",
-          errorMessage: appealReasonError,
-          hint: {
-            text: "You can add more reasons later"
-          },
+          name: "personalReason",
+          errorMessage: personalReasonError,
           fieldset: {
             legend: {
-              text: 'Why are you appealing this penalty?',
+              text: 'What is the personal circumstance?',
               isPageHeading: true,
               classes: 'govuk-fieldset__legend--xl'
             }
           },
           items: [
             {
-              value: "illness",
-              text: "Illness and health issues",
-              checked: checkedIllness
+              value: "financial",
+              text: "Financial",
+              checked: checkedFinancial
             },
             {
-              value: "personal",
-              text: "Personal reasons",
-              checked: checkedPersonal
+              value: "bereavement",
+              text: "Bereavement",
+              checked: checkedBereavement
             },
             {
-              value: "rejectedAccounts",
-              text: "Rejected accounts",
-              checked: checkedRejected
+              value: "mentalHealth",
+              text: "Mental health",
+              checked: checkedMentalHealth
             },
             {
-              value: "filingService",
-              text: "Problem with Companies House services",
-              checked: checkedService
-            },
-            {
-              value: "disaster",
-              text: "Fire, flood or other disaster",
-              checked: checkedDisaster
-            },
-            {
-              value: "accounts",
-              text: "Accounting issues",
-              checked: checkedAccounts
+              value: "housing",
+              text: "Housing or accommodation",
+              checked: checkedHousing
             },
             {
               value: "other",
-              text: "I'm appealing for another reason",
+              text: "I'm appealing for another personal reason",
               checked: otherReasonError
             }
           ]
