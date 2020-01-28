@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appeal due to personal reasons: Tell us when the issue started
+  Appeal due to personal reasons: When did the person die?
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
@@ -39,13 +39,13 @@
         {% endif %}
 
         {{ govukDateInput({
-            id: "issue-start",
-            namePrefix: "issueStart",
+            id: "date-of-death",
+            namePrefix: "dateOfDeath",
             value: info,
-            errorMessage: startDateError,
+            errorMessage: dateOfDeathError,
             fieldset: {
               legend: {
-                text: "When did the issue start?",
+                text: "When did the person die?",
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--xl"
               }
@@ -57,17 +57,17 @@
               {
                 classes: inputClasses.day,
                 name: 'day',
-                value: issueStartDay
+                value: dateOfDeathDay
               },
               {
                 classes: inputClasses.month,
                 name: 'month',
-                value: issueStartMonth
+                value: dateOfDeathMonth
               },
               {
                 classes: inputClasses.year,
                 name: 'year',
-                value: issueStartYear
+                value: dateOfDeathYear
               }
             ]
           })

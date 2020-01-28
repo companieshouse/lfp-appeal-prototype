@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appealing for bereavement. Relationship to the company
+  Appeal due to personal reasons: Which directors did this affect?
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
@@ -15,37 +15,49 @@
   }) }}
   {{ govukBackLink({
     text: "Back",
-    href: "/choose-reason"
+    href: "/personal/personal-end-date"
   }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="post">
+
         {% if errorList.length > 0 %}
           {{ govukErrorSummary({
             titleText: "There is a problem with the information you entered",
             errorList: errorList
           }) }}
         {% endif %}
-        <h1 class="govuk-heading-xl">How was the person related to the company?</h1>
-        {% if errTitle.flag %}
-          {% set titleError = {
-            text: errTitle.text
-          }  %}
+
+        {% if err.flag %}
+          {% set Error = {
+            text: err.text
+          } %}
         {% else %}
-          {% set titleError = false %}
+          {% set Error = false %}
         {% endif %}
 
-        {{ govukInput({
-          id: "relationship-to-company",
-          name: "relationshipToCompany",
-          errorMessage: titleError,
-          label: {
-            text: "",
-            isPageHeading: true
+        {% set directorsArray = [] %}
+        {% for director in scenario.company.directors %}
+          {% set directorsArray = (directorsArray.push({value: director, html: director, checked: false}), directorsArray) %}
+        {% endfor %}
+
+        {{ govukCheckboxes({
+          idPrefix: "directors-affected",
+          name: "directorsAffected",
+          errorMessage: directorsAffectedError,
+          fieldset: {
+            legend: {
+              text: 'Which directors did this affect?',
+              isPageHeading: true,
+              classes: 'govuk-fieldset__legend--xl'
+            }
           },
-          value: relationshipToCompany
+          hint: {
+            text: 'These were the active directors when your accounts were due'
+          },
+          items: directorsArray
         }) }}
 
         {{ govukInput({

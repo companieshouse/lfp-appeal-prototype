@@ -8,15 +8,15 @@
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
   {{ govukBackLink({
-  text: "Back",
-  href: "/personal/personal-reason"
-}) }}
+    text: "Back",
+    href: "/personal/personal-reason"
+  }) }}
 {% endblock %}
 {% block content %}
 
@@ -39,8 +39,8 @@
         {% endif %}
 
         {{ govukDateInput({
-            id: "issue-start",
-            namePrefix: "issueStart",
+            id: "personal-start",
+            namePrefix: "personalStart",
             value: info,
             errorMessage: startDateError,
             fieldset: {

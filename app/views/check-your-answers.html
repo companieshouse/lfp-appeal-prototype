@@ -68,8 +68,8 @@
             },
             value: {
               html: "&pound;" + scenario.penalties[0].value
-      } }
-      ,
+      }
+    },
       {
         key: {
           text: "Date"
@@ -331,47 +331,184 @@ rows: [
 }) }}
 
           {% elif reason.reason === 'personal' %}
-            <h3 class="govuk-heading-m">{{appealListIndex}}Personal reasons: {{ reason.personalReason }}</h3>
+          
+          {% if reason.personalReason === 'Bereavement' %}
+          <h3 class="govuk-heading-m">{{appealListIndex}}Personal reason: {{ reason.personalReason }}</h3>
+          {{ govukSummaryList({
+            rows: [
+              {
+                key: {
+                  text: "Date of death"
+                },
+                value: {
+                  text: reason.dateOfDeathDate.day + " " + reason.dateOfDeathDate.month | displayMonth + " " + reason.dateOfDeathDate.year
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "personal/bereavement/date-of-death/?id" + loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "date of death"
+                    }
+                  ]
+                }
+              },
+              {
+                key: {
+                  text: "Relationship to company"
+                },
+                value: {
+                  text: reason.relationshipToCompany
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "personal/bereavement/relationship-to-company/?id" + loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "relationship to company"
+                    }
+                  ]
+                }
+              },
+              {
+                key: {
+                  text: "Further information"
+                },
+                value: {
+                  text: reason.personalInformation | safe | nl2br
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/personal/personal-information?id=" + loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "further information"
+                    }
+                  ]
+                }
+              },
+              documents
+            ]
+            }) }}
+          {% else %}
 
-            {{ govukSummaryList({
-rows: [
-  {
-    key: {
-      text: "Personal reason"
-    },
-    value: {
-      html: reason.personalReason | capitalize
-    },
-    actions: {
-      items: [
-        {
-          href: "/personal/personal-information?id=" + loop.index0,
-          text: "Change",
-          visuallyHiddenText: "personal reason"
-        }
-      ]
-    }
-  },
-  {
-    key: {
-      text: "Further information"
-    },
-    value: {
-      text: reason.personalInformation | safe | nl2br
-    },
-    actions: {
-      items: [
-        {
-          href: "/personal/personal-information?id=" + loop.index0,
-          text: "Change",
-          visuallyHiddenText: "further information"
-        }
-      ]
-    }
-  },
-  documents
-]
-}) }}
+            {% if reason.continuedPersonal === 'yes' %}
+              {% set endDateHTML = null %}
+            {% else %}
+              {% set endDateHTML = {
+                key: {
+                  text: "Issue end date"
+                },
+                value: {
+                  html: reason.personalEndDate.day + " " + reason.personalEndDate.month | displayMonth + " " + reason.personalEndDate.year
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "issue/issue-end-date/?id=" + loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "issue end date"
+                    }
+                  ]
+                }
+              } %}
+              {% endif %}
+
+              {% if scenario.company.directors.length > 1 %}
+                {% if reason.directorsAffected.length > 1 %}
+                  {% set directorsList %}
+                  <ul class="govuk-list govuk-list--bullet">
+                    {% for director in reason.directorsAffected %}
+                      <li>
+                        {{ director }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  {% endset %}
+                {% else %}
+                  {% set directorsList %}
+                    {{ reason.directorsAffected[0] }}
+                  {% endset %}
+                {% endif %}
+
+                {% set directorsAffectedHTML = {
+                  key: {
+                    text: "Directors affected"
+                  },
+                  value: {
+                    html: directorsList
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: "personal/directors-affected/?id=" + loop.index0,
+                        text: "Change",
+                        visuallyHiddenText: "affected directors"
+                      }
+                    ]
+                  }
+                } %}
+              {% endif %}
+              <h3 class="govuk-heading-m">{{appealListIndex}}Personal reason: {{ reason.personalReason }}</h3>
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: {
+                      text: "Issue start date"
+                    },
+                    value: {
+                      text: reason.personalStartDate.day + " " + reason.personalStartDate.month | displayMonth + " " + reason.personalStartDate.year
+                    },
+                    actions: {
+                      items: [
+                        {
+                          href: "personal/personal-start-date/?id" + loop.index0,
+                          text: "Change",
+                          visuallyHiddenText: "issue start date"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    key: {
+                      text: "Continuing issue"
+                    },
+                    value: {
+                      text: reason.continuedPersonal | title
+                    },
+                    actions: {
+                      items: [
+                        {
+                          href: "issue/issue-start-date/?id" + loop.index0,
+                          text: "Change",
+                          visuallyHiddenText: "issue start date"
+                        }
+                      ]
+                    }
+                  },
+                  endDateHTML,
+                  directorsAffectedHTML,
+                  {
+                    key: {
+                      text: "Further information"
+                    },
+                    value: {
+                      text: reason.personalInformation | safe | nl2br
+                    },
+                    actions: {
+                      items: [
+                        {
+                          href: "/personal/personal-information?id=" + loop.index0,
+                          text: "Change",
+                          visuallyHiddenText: "further information"
+                        }
+                      ]
+                    }
+                  },
+                  documents
+                ]
+                }) }}
+          {% endif %}
 
           {% elif reason.reason === 'damage' %}
             <h3 class="govuk-heading-m">{{appealListIndex}}Theft or criminal damage</h3>
