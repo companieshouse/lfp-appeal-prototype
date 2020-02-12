@@ -14,8 +14,8 @@
       <div class="govuk-panel govuk-panel--confirmation">
         <h1 class="govuk-panel__title">Appeal submitted</h1>
         <div class="govuk-panel__body">
-          Your reference number is<br>
-          <strong>{{ scenario.penalties[0].pen1 }}</strong>
+          Your reference number is your company number<br>
+          <strong>{{ scenario.company.number }}</strong>
         </div>
       </div>
 
@@ -24,6 +24,7 @@
         <span class="govuk-body-l govuk-!-font-weight-bold">{{ userEmail }}</span>
         which contains the information you've provided for this appeal.
       </p>
+
       <p class="govuk-body">
         <a href="javascript:if(window.print)window.print()" class="govuk-link">Print a copy of this appeal</a>
       </p>
