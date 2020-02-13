@@ -1,0 +1,41 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Personal circumstances</h3>
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: "Personal circumstance"
+},
+value: {
+html: reason.personalReason | capitalize
+},
+actions: {
+items: [
+{
+href: "/personal/personal-information?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "personal circumstance"
+}
+]
+}
+},
+{
+key: {
+text: "Further information"
+},
+value: {
+text: reason.personalInformation | safe | nl2br
+},
+actions: {
+items: [
+{
+href: "/personal/personal-information?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "further information"
+}
+]
+}
+},
+documents
+]
+}) }}

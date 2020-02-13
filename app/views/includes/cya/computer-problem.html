@@ -1,0 +1,67 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Problems filing online</h3>
+
+{% set problemReasonHTML %}
+{% if reason.problemReason === 'other' %}
+  Other reason -
+  {{ reason.otherProblemReason }}
+{% else %}
+  {{ reason.problemReason | safe | nl2br }}
+{% endif %}
+{% endset %}
+
+{{ govukSummaryList({
+rows: [
+  {
+    key: {
+      text: "Reason"
+    },
+    value: {
+       html: problemReasonHTML
+    },
+     actions: {
+        items: [
+     {
+        href: "/computer-problem/choose-computer-problem?id=" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "Problems filing online reason"
+      }
+    ]
+  }
+},
+{
+  key: {
+text: "Date you tried to file"
+},
+value: {
+html: reason.problemDate.day + " " + reason.problemDate.month | displayMonth + " " + reason.problemDate.year
+},
+actions: {
+items: [
+{
+href: "/computer-problem/problem-date?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "Date you tried to file"
+}
+]
+}
+},
+{
+  key: {
+text: "Further information"
+},
+value: {
+html: reason.computerProblem | safe | nl2br
+},
+actions: {
+items: [
+{
+href: "/computer-problem/reason-computer-problem?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "further information"
+}
+]
+}
+},
+documents
+]
+}) }}

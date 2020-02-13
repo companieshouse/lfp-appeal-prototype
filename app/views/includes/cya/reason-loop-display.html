@@ -1,0 +1,103 @@
+{% if appealReasons.length > 1 %}
+  <h2 class="govuk-heading-l">Reasons for appeal</h2>
+{% else %}
+  <h2 class="govuk-heading-l">Reason for appeal</h2>
+{% endif %}
+{% for reason in appealReasons %}
+  {% if appealReasons.length > 1 %}
+    {% set appealListIndex %}
+    {{loop.index}}:
+    {% endset %}
+  {% else %}
+    {% set appealListIndex = '' %}
+  {% endif %}
+
+  {% if reason.documents.length > 0 %}
+    {% if reason.documents.length > 1 %}
+
+      {% set documentList %}
+      <ul class="govuk-list govuk-list--bullet">
+        {% for document in reason.documents | reverse %}
+          <li>
+            <a href='' class='govuk-link' download="download">{{ document }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% endset %}
+
+    {% else %}
+
+      {% set documentList %}
+      <a href='' class='govuk-link' download="download">{{ reason.documents }}</a>
+      {% endset %}
+
+    {% endif %}
+
+    {% if showChangeLinks === true %}
+      {% set reasonDocumentChange = {
+        href: "evidence-upload?id=" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "supporting documents"
+     } %}
+    {% endif %}
+
+    {% set documents = {
+      key: {
+        text: "Supporting documents"
+      },
+      value: {
+        html: documentList
+      },
+      actions: {
+        items: [reasonDocumentChange]
+      }
+    }
+ %}
+  {% else %}
+    {% set documents = {
+      key: {
+        text: "Supporting documents"
+      },
+      value: {
+        text: "None"
+      },
+      actions: {
+        items: [reasonDocumentChange]
+      }
+    } %}
+  {% endif %}
+
+  <div class="reason-container">
+
+    {% if reason.reason === 'illness' %}
+      {% include "includes/cya/illness.html" %}
+
+    {% elif reason.reason === 'personal' %}
+      {% include "includes/cya/personal-reasons.html" %}
+
+    {% elif reason.reason === 'damage' %}
+      {% include "includes/cya/damage.html" %}
+
+    {% elif reason.reason === 'rejectedAccounts' %}
+      {% include "includes/cya/rejected-accounts.html" %}
+
+    {% elif reason.reason === 'disaster' %}
+      {% include "includes/cya/disaster.html" %}
+
+    {% elif reason.reason === 'accounts' %}
+      {% include "includes/cya/accounts.html" %}
+
+    {% elif reason.reason === 'companyChanges' %}
+      {% include "includes/cya/company-changes.html" %}
+
+    {% elif reason.reason === 'computerProblem' %}
+      {% include "includes/cya/computer-problem.html" %}
+
+    {% else %}
+      {% include "includes/cya/other.html" %}
+    {% endif %}
+    <p class="govuk-body">
+      <a href="/remove-reason?id={{loop.index0}}" class="govuk-link">Remove this reason</a>
+    </p>
+  </div>
+{% endfor %}

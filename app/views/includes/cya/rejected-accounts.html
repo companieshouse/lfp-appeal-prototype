@@ -1,0 +1,24 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Rejected accounts</h3>
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: "Further information"
+},
+value: {
+text: reason.rejectedAccounts | safe | nl2br
+},
+actions: {
+items: [
+{
+href: "/rejected-accounts/rejected-accounts-information?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "further information"
+}
+]
+}
+},
+documents
+]
+}) }}

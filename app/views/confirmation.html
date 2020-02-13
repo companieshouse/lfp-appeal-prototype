@@ -28,6 +28,10 @@
       <p class="govuk-body">
         <a href="javascript:if(window.print)window.print()" class="govuk-link">Print a copy of this appeal</a>
       </p>
+      <div class="print-content">
+        {% set showChangeLinks = false %}
+        {% include "includes/cya/reason-loop-display.html" %}
+      </div>
       <h2 class="govuk-heading-m">What happens next</h2>
       <p>We’ll review the appeal and email you with a decision within 20 working days. We’ll pause recovery action during this time.</p>
       <p>We may contact you during the review process if we need more information.

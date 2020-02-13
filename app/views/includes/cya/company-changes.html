@@ -1,0 +1,85 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Changes to the company</h3>
+
+{% if reason.dateWasChanged != null %}
+  {% set changesDateHTML = {
+  key: {
+    text: "Date the changes happened"
+  },
+  value: {
+    html: reason.dateWasChanged.day + " " + reason.dateWasChanged.month | displayMonth + " " + reason.dateWasChanged.year
+  },
+  actions: {
+    items: [
+      {
+        href: "/company-changes/aware-change-date?id={" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "date the changes happened"
+      }
+    ]
+  }
+}
+%}
+{% elseif reason.dateWillChanged != null %}
+  {% set changesDateHTML = {
+  key: {
+    text: "Date the changes will happen"
+  },
+  value: {
+    html: reason.dateWillChange.day + " " + reason.dateWillChange.month | displayMonth + " " + reason.dateWillChange.year
+  },
+  actions: {
+    items: [
+      {
+        href: "/company-changes/date-will-change?id=" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "date the changes will happen"
+      }
+    ]
+  }
+}
+%}
+{% elseif reason.awareChangeDate != null %}
+  {% set changesDateHTML = {
+  key: {
+    text: "Date aware of changes"
+  },
+  value: {
+    html: reason.awareChangeDate.day + " " + reason.awareChangeDate.month | displayMonth + " " + reason.awareChangeDate.year
+  },
+  actions: {
+    items: [
+      {
+        href: "/company-changes/aware-change-date?id={" + loop.index0,
+        text: "Change",
+        visuallyHiddenText: "date aware of changes"
+      }
+    ]
+  }
+}
+%}
+{% else %}
+{% endif %}
+
+{{ govukSummaryList({
+  rows: [
+    changesDateHTML,
+  {
+    key: {
+      text: "Further information"
+    },
+    value: {
+      html: reason.companyChanges | safe | nl2br
+    },
+    actions: {
+      items: [
+    {
+    href: "/company-changes/reason-company-changes?id=" + loop.index0,
+      text: "Change",
+      visuallyHiddenText: "further information"
+    }
+  ]
+}
+},
+  documents
+]
+}) }}

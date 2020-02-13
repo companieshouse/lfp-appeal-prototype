@@ -1,0 +1,41 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Natural disaster</h3>
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: "Date of incident"
+},
+value: {
+html: reason.disasterDate.day + " " + reason.disasterDate.month | displayMonth + " " + reason.disasterDate.year
+},
+actions: {
+items: [
+{
+href: "natural-disaster/disaster-date/?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "date of incident"
+}
+]
+}
+},
+{
+key: {
+text: "Further information"
+},
+value: {
+text: reason.naturalDisaster | safe | nl2br
+},
+actions: {
+items: [
+{
+href: "/natural-disaster/reason-natural-disaster?id=" + loop.index0,
+text: "Change",
+visuallyHiddenText: "further information"
+}
+]
+}
+},
+documents
+]
+}) }}
