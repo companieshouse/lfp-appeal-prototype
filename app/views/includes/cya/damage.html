@@ -1,0 +1,42 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Theft or criminal damage</h3>
+
+{% if showChangeLinks === true %}
+  {% set incidentDateChange = {
+    href: "theft-criminal-damage/damage-date/?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "date of incident"
+ } %}
+  {% set damageInfoChange = {
+    href: "/theft-criminal-damage/reason-damage?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "further information"
+ } %}
+{% endif %}
+
+{{ govukSummaryList({
+rows: [
+{
+  key: {
+    text: "Date of incident"
+  },
+  value: {
+    html: reason.damageDate.day + " " + reason.damageDate.month | displayMonth + " " + reason.damageDate.year
+  },
+  actions: {
+    items: [incidentDateChange]
+  }
+},
+{
+  key: {
+    text: "Further information"
+  },
+  value: {
+    text: reason.damage | safe | nl2br
+  },
+  actions: {
+    items: [damageInfoChange]
+  }
+},
+  documents
+]
+}) }}

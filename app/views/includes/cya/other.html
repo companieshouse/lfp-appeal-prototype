@@ -1,0 +1,54 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Other reason</h3>
+
+{% set otherReasonHTML %}
+{% if reason.otherReason != "" %}
+  {{ reason.otherReason }}
+{% else %}
+  Not provided
+{% endif %}
+{% endset %}
+
+{% if showChangeLinks === true %}
+  {% set reasonTitleChange = {
+   href: "/other/reason-other?id=" + loop.index0,
+   text: "Change",
+   visuallyHiddenText: "other reason"
+ } %}
+  {% set reasonInfoChange = {
+   href: "/other/reason-other?id=" + loop.index0,
+   text: "Change",
+   visuallyHiddenText: "further information"
+ } %}
+{% endif %}
+
+{{ govukSummaryList({
+rows: [
+  {
+    key: {
+      text: "Reason"
+    },
+    value: {
+       html: otherReasonHTML
+    },
+     actions: {
+        items: [
+          reasonTitleChange
+    ]
+  }
+},
+{
+  key: {
+    text: "Further information"
+  },
+  value: {
+     html: reason.otherInformation | safe | nl2br
+  },
+   actions: {
+      items: [
+        reasonInfoChange
+  ]
+}
+},
+documents
+]
+}) }}
