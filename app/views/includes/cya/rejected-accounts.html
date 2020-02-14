@@ -1,23 +1,25 @@
 <h3 class="govuk-heading-m">{{appealListIndex}}Rejected accounts</h3>
 
+{% if rejectedInfoLinks === true %}
+  {% set rejectedInfoChange = {
+    href: "/rejected-accounts/rejected-accounts-information?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "further information"
+ } %}
+{% endif %}
+
 {{ govukSummaryList({
 rows: [
 {
-key: {
-text: "Further information"
-},
-value: {
-text: reason.rejectedAccounts | safe | nl2br
-},
-actions: {
-items: [
-{
-href: "/rejected-accounts/rejected-accounts-information?id=" + loop.index0,
-text: "Change",
-visuallyHiddenText: "further information"
-}
-]
-}
+  key: {
+    text: "Further information"
+  },
+  value: {
+    text: reason.rejectedAccounts | safe | nl2br
+  },
+  actions: {
+    items: [rejectedInfoChange]
+  }
 },
 documents
 ]

@@ -1,62 +1,64 @@
 <h3 class="govuk-heading-m">{{appealListIndex}}Changes to the company</h3>
 
+{% if showChangeLinks === true %}
+  {% set dateWasChange = {
+    href: "/company-changes/aware-change-date?id={" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "date the changes happened"
+ } %}
+  {% set dateWillChange = {
+    href: "/company-changes/date-will-change?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "date the changes will happen"
+ } %}
+  {% set awareOfChange = {
+   href: "/company-changes/date-will-change?id=" + loop.index0,
+   text: "Change",
+   visuallyHiddenText: "date the changes will happen"
+} %}
+  {% set changeInfoChange = {
+  href: "/company-changes/reason-company-changes?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "further information"
+} %}
+{% endif %}
+
 {% if reason.dateWasChanged != null %}
   {% set changesDateHTML = {
-  key: {
-    text: "Date the changes happened"
-  },
-  value: {
-    html: reason.dateWasChanged.day + " " + reason.dateWasChanged.month | displayMonth + " " + reason.dateWasChanged.year
-  },
-  actions: {
-    items: [
-      {
-        href: "/company-changes/aware-change-date?id={" + loop.index0,
-        text: "Change",
-        visuallyHiddenText: "date the changes happened"
-      }
-    ]
-  }
-}
-%}
+    key: {
+      text: "Date the changes happened"
+    },
+    value: {
+      html: reason.dateWasChanged.day + " " + reason.dateWasChanged.month | displayMonth + " " + reason.dateWasChanged.year
+    },
+    actions: {
+      items: [dateWasChange]
+    }
+  } %}
 {% elseif reason.dateWillChanged != null %}
   {% set changesDateHTML = {
-  key: {
-    text: "Date the changes will happen"
-  },
-  value: {
-    html: reason.dateWillChange.day + " " + reason.dateWillChange.month | displayMonth + " " + reason.dateWillChange.year
-  },
-  actions: {
-    items: [
-      {
-        href: "/company-changes/date-will-change?id=" + loop.index0,
-        text: "Change",
-        visuallyHiddenText: "date the changes will happen"
-      }
-    ]
-  }
-}
-%}
+    key: {
+      text: "Date the changes will happen"
+    },
+    value: {
+      html: reason.dateWillChange.day + " " + reason.dateWillChange.month | displayMonth + " " + reason.dateWillChange.year
+    },
+    actions: {
+      items: [dateWillChange]
+    }
+  } %}
 {% elseif reason.awareChangeDate != null %}
   {% set changesDateHTML = {
-  key: {
-    text: "Date aware of changes"
-  },
-  value: {
-    html: reason.awareChangeDate.day + " " + reason.awareChangeDate.month | displayMonth + " " + reason.awareChangeDate.year
-  },
-  actions: {
-    items: [
-      {
-        href: "/company-changes/aware-change-date?id={" + loop.index0,
-        text: "Change",
-        visuallyHiddenText: "date aware of changes"
-      }
-    ]
-  }
-}
-%}
+    key: {
+      text: "Date aware of changes"
+    },
+    value: {
+      html: reason.awareChangeDate.day + " " + reason.awareChangeDate.month | displayMonth + " " + reason.awareChangeDate.year
+    },
+    actions: {
+      items: [awareOfChange]
+    }
+  } %}
 {% else %}
 {% endif %}
 
@@ -71,13 +73,7 @@
       html: reason.companyChanges | safe | nl2br
     },
     actions: {
-      items: [
-    {
-    href: "/company-changes/reason-company-changes?id=" + loop.index0,
-      text: "Change",
-      visuallyHiddenText: "further information"
-    }
-  ]
+      items: [changeInfoChange]
 }
 },
   documents

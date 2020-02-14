@@ -96,8 +96,11 @@
     {% else %}
       {% include "includes/cya/other.html" %}
     {% endif %}
-    <p class="govuk-body">
-      <a href="/remove-reason?id={{loop.index0}}" class="govuk-link">Remove this reason</a>
-    </p>
+
+    {% if showChangeLinks === true %}
+      <p class="govuk-body">
+        <a href="/remove-reason?id={{loop.index0}}" class="govuk-link">Remove this reason</a>
+      </p>
+    {% endif %}
   </div>
 {% endfor %}
