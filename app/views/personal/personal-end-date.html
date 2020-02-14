@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  {% if errorList.length > 0 %}
+    Error:
+  {% endif %}
+  Appeal due to personal reasons: Tell us when the issue ended
+{% endblock %}
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "continued-personal"
+  }) }}
+{% endblock %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="post">
+        {% if errorList.length > 0 %}
+          {{ govukErrorSummary({
+            titleText: "There was a problem with the date you gave us",
+            errorList: errorList
+          }) }}
+        {% endif %}
+
+        {% if errorList.length > 0 %}
+          {% set endDateError = {
+            text: 'Please enter a real date'
+          } %}
+        {% else %}
+          {% set endDateError = false %}
+        {% endif %}
+
+        {% set hintHTML %}
+        You told us the issue started on
+        {{ reason.personalStartDate.day }}
+        {{ reason.personalStartDate.month | displayMonth }}
+        {{ reason.personalStartDate.year }}
+        {% endset -%}
+
+        {{ govukDateInput({
+          id: "personal-end-date",
+          namePrefix: "personalEndDate",
+          value: info,
+          errorMessage: endDateError,
+          fieldset: {
+            legend: {
+              text: "When did the issue end?",
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            hint: {
+              html: hintHTML
+            },
+            items: [
+              { classes: inputClasses.day, name: 'day', value: personalEndDay },
+              { classes: inputClasses.month, name: 'month', value: personalEndMonth },
+              { classes: inputClasses.year, name: 'year', value: personalEndYear }
+            ]
+          })
+        }}
+
+        {{ govukInput({
+          id: "editId",
+          name: "editId",
+          type: "hidden",
+          value: id
+        }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+        <p>
+          <a href="/sign-out" class="govuk-link">Save and sign out</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

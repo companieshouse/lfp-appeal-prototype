@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  {% if errorList.length > 0 %}
+    Error:
+  {% endif %}
+  Appeal due to personal reasons: Is this a continuing issue?
+{% endblock %}
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "personal-start-date"
+  }) }}
+{% endblock %}
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorList.length > 0 %}
+        {{ govukErrorSummary({
+            titleText: "There is a problem",
+            errorList: errorList
+          }) }}
+      {% endif %}
+      <form action="" method="post">
+        {% if errorList.length > 0 %}
+          {% set continuedPersonalError = {
+            text: continuedPersonalErr.text
+          } %}
+        {% else %}
+          {% set continuedPersonalError = false %}
+        {% endif %}
+
+        {% set hintHTML %}
+        You told us the issue started on
+        {{ reason.personalStartDate.day }}
+        {{ reason.personalStartDate.month | displayMonth }}
+        {{ reason.personalStartDate.year }}
+        {% endset -%}
+
+        {{ govukRadios({
+          classes: "govuk-radios--inline",
+          idPrefix: "continued-personal",
+          name: "continuedPersonal",
+          errorMessage: continuedPersonalError,
+          fieldset: {
+            legend: {
+              text: 'Is this a continuing issue?',
+              isPageHeading: true,
+              classes: 'govuk-fieldset__legend--xl'
+            }
+          },
+          hint: {
+            html: hintHTML
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No"
+            }
+          ]
+        }) }}
+        {{ govukInput({
+          id: "editId",
+          name: "editId",
+          type: "hidden",
+          value: id
+        }) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+        <p>
+          <a href="/sign-out" class="govuk-link">Save and sign out</a>
+        </p>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

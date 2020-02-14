@@ -13,12 +13,12 @@ module.exports = {
   },
   penalties: [
     {
-      pen1: 'A00000001',
-      pen2: 'A00000001',
+      pen1: 'PEN1A/12345677',
+      pen2: 'PEN2A/12345677',
       periodStart: '1 May 2015',
       periodEnd: '30 April 2016',
-      due: '20 October 2019',
-      filed: '25 October 2019',
+      due: '1 January 2017',
+      filed: '15 January 2017',
       overdue: '14 days',
       band: 'Up to 1 month overdue',
       value: 150,
