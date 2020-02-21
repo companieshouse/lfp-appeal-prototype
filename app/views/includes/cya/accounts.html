@@ -1,0 +1,74 @@
+<h3 class="govuk-heading-m">{{appealListIndex}}Accounting issues</h3>
+
+{% if showChangeLinks === true %}
+  {% set thirdPartyChange = {
+    href: "accounts/third-party/?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "third party accountant or agent"
+ } %}
+  {% set accountsNameChange = {
+    href: "accounts/accounts-name/?id=" + loop.index0,
+    text: "Change",
+    visuallyHiddenText: "Name of accountant or agent"
+ } %}
+  {% set accountsDateChange = {
+   href: "accounts/accounts-date/?id=" + loop.index0,
+   text: "Change",
+   visuallyHiddenText: "date issue happened"
+} %}
+  {% set accountsInfoChange = {
+  href: "/accounts/reason-accounts?id=" + loop.index0,
+  text: "Change",
+  visuallyHiddenText: "further information"
+} %}
+{% endif %}
+
+{{ govukSummaryList({
+rows: [
+{
+key: {
+text: "Third party accountant or agent?"
+},
+value: {
+html: reason.thirdParty
+},
+actions: {
+items: [thirdPartyChange]
+}
+},
+{
+key: {
+text: "Name of accountant or agent"
+},
+value: {
+html: reason.accountsName
+},
+actions: {
+items: [accountsNameChange]
+}
+},
+{
+key: {
+text: "Date issue happened"
+},
+value: {
+html: reason.accountsDate.day + " " + reason.accountsDate.month | displayMonth + " " + reason.accountsDate.year
+},
+actions: {
+items: [accountsDateChange]
+}
+},
+{
+key: {
+text: "Further information"
+},
+value: {
+text: reason.accounts | safe | nl2br
+},
+actions: {
+items: [accountsInfoChange]
+}
+},
+documents
+]
+}) }}

@@ -4,32 +4,36 @@ module.exports = function (router) {
     var info = ''
     var checked = {}
     var otherPersonError = false
-    checked.officer = false
-    checked.accountant = false
-    checked.family = false
-    checked.employee = false
+    var checkedDirector = false
+    var checkedAccountant = false
+    var checkedFamily = false
+    var checkedEmployee = false
 
     if (req.query.id) {
       id = req.query.id
       info = req.session.appealReasons[id].illPerson
       switch (info) {
-        case 'Company director or officer':
-          checked.officer = true
+        case 'director':
+          checkedDirector = true
           break
-        case 'Company accountant or agent':
-          checked.accountant = true
+        case 'accountant':
+          checkedAccountant = true
           break
-        case 'Family member':
-          checked.family = true
+        case 'family':
+          checkedFamily = true
           break
-        case 'Company employee':
-          checked.employee = true
+        case 'employee':
+          checkedEmployee = true
           break
         case 'Someone else':
           otherPersonError = true
           break
       }
       res.render('illness/who-was-ill', {
+        checkedDirector: checkedDirector,
+        checkedAccountant: checkedAccountant,
+        checkedFamily: checkedFamily,
+        checkedEmployee: checkedEmployee,
         id: id,
         info: info,
         checked: checked,
@@ -40,14 +44,20 @@ module.exports = function (router) {
     }
   })
   router.post('/illness/who-was-ill', function (req, res) {
-    var editId = req.body.editId
     var illPerson = req.body.illPerson
     var otherPerson = req.body.otherPerson
+    var editId = req.body.editId
     var errorFlag = false
     var illPersonErr = {}
     var otherPersonErr = {}
     var errorList = []
     var reasonObject = {}
+
+    if (req.body.editId !== '') {
+      reasonObject = req.session.appealReasons[editId]
+    } else {
+      reasonObject = req.session.appealReasons.pop()
+    }
 
     if (typeof illPerson === 'undefined') {
       illPersonErr.type = 'blank'
@@ -74,19 +84,296 @@ module.exports = function (router) {
         errorList: errorList,
         illPersonErr: illPersonErr,
         otherPersonErr: otherPersonErr,
-        illPerson: illPerson,
-        otherPerson: otherPerson,
         id: editId
       })
     } else {
+      reasonObject.illPerson = req.body.illPerson
+      reasonObject.otherPerson = req.body.otherPerson
+      reasonObject.complete = false
+      switch (req.body.illPerson) {
+        case 'director':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = 'illness/ill-director'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/ill-director')
+          break
+        case 'accountant':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = '/illness/ill-accountant'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/ill-accountant')
+          break
+        case 'family':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = '/illness/family-member'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/family-member')
+          break
+        case 'employee':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = '/illness/illness-start-date'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/illness-start-date')
+          break
+        case 'otherPerson':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = '/illness/illness-start-date'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/illness-start-date')
+          break
+      }
+    }
+  })
+  router.get('/illness/ill-director', function (req, res) {
+    var reasonObject = {}
+    var id = 0
+    var info = ''
+
+    reasonObject = req.session.appealReasons.pop()
+    req.session.appealReasons.push(reasonObject)
+
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].illDirector
+      res.render('illness/ill-director', {
+        scenario: req.session.scenario,
+        reason: reasonObject,
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('illness/ill-director', {
+        scenario: req.session.scenario,
+        reason: reasonObject,
+        info: info
+      })
+    }
+  })
+  router.post('/illness/ill-director', function (req, res) {
+    var illDirector = req.body.illDirector
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+    var reasonObject = {}
+    reasonObject.illDirector = req.body.illDirector
+
+    if (req.body.editId !== '') {
+      reasonObject = req.session.appealReasons[editId]
+    } else {
+      reasonObject = req.session.appealReasons.pop()
+    }
+
+    if (typeof illDirector === 'undefined') {
+      Err.type = 'blank'
+      Err.text = 'You must tell us which director was ill'
+      Err.href = '#ill-director-1'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      reasonObject = req.session.appealReasons[req.session.appealReasons.length - 1]
+      res.render('illness/ill-director', {
+        errorList: errorList,
+        Err: Err,
+        scenario: req.session.scenario,
+        reason: reasonObject
+      })
+    } else {
       if (req.body.editId !== '') {
-        req.session.appealReasons[editId].illPerson = illPerson
-        req.session.appealReasons[editId].otherPerson = otherPerson
+        req.session.appealReasons[editId].illDirector = illDirector
         res.redirect('/check-your-answers')
       } else {
-        reasonObject = req.session.appealReasons.pop()
-        reasonObject.illPerson = req.body.illPerson
-        reasonObject.otherPerson = req.body.otherPerson
+        req.session.appealReasons.pop()
+        reasonObject.illDirector = req.body.illDirector
+        reasonObject.nextStep = 'illness/illness-start-date'
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/illness/illness-start-date')
+      }
+    }
+  })
+  router.get('/illness/ill-accountant', function (req, res) {
+    var id = 0
+    var info = ''
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].illAccountant
+      res.render('illness/ill-accountant', {
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('illness/ill-accountant')
+    }
+  })
+  router.post('/illness/ill-accountant', function (req, res) {
+    var illAccountant = req.body.illAccountant
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+
+    if (illAccountant === '') {
+      Err.type = 'blank'
+      Err.text = 'You must tell us more information'
+      Err.href = '#ill-accountant'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('illness/ill-accountant', {
+        errorList: errorList,
+        Err: Err
+      })
+    } else {
+      if (req.body.editId !== '') {
+        req.session.appealReasons[editId].illAccountant = illAccountant
+        res.redirect('/check-your-answers')
+      } else {
+        var reasonObject = req.session.appealReasons.pop()
+        reasonObject.illAccountant = req.body.illAccountant
+        reasonObject.nextStep = 'illness/illness-start-date'
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/illness/illness-start-date')
+      }
+    }
+  })
+  router.get('/illness/family-member', function (req, res) {
+    var reasonObject = {}
+    var id = 0
+    var info = ''
+
+    reasonObject = req.session.appealReasons.pop()
+    req.session.appealReasons.push(reasonObject)
+
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].illFamily
+      res.render('illness/family-member', {
+        scenario: req.session.scenario,
+        reason: reasonObject,
+        id: id,
+        info: info
+      })
+    } else {
+      res.render('illness/family-member', {
+        scenario: req.session.scenario,
+        reason: reasonObject,
+        info: info
+      })
+    }
+  })
+  router.post('/illness/family-member', function (req, res) {
+    var illFamily = req.body.illFamily
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+    var reasonObject = {}
+    reasonObject.illFamily = req.body.illFamily
+
+    if (req.body.editId !== '') {
+      reasonObject = req.session.appealReasons[editId]
+    } else {
+      reasonObject = req.session.appealReasons.pop()
+    }
+
+    if (typeof illFamily === 'undefined') {
+      Err.type = 'blank'
+      Err.text = 'You must tell which director the family member was related to'
+      Err.href = '#ill-family-1'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      reasonObject = req.session.appealReasons[req.session.appealReasons.length - 1]
+      res.render('illness/family-member', {
+        errorList: errorList,
+        Err: Err,
+        scenario: req.session.scenario,
+        reason: reasonObject
+      })
+    } else {
+      if (req.body.editId !== '') {
+        req.session.appealReasons[editId].illFamily = illFamily
+        res.redirect('/check-your-answers')
+      } else {
+        req.session.appealReasons.pop()
+        reasonObject.illFamily = req.body.illFamily
+        reasonObject.nextStep = 'illness/family-relationship'
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/illness/family-relationship')
+      }
+    }
+  })
+  router.get('/illness/family-relationship', function (req, res) {
+    var id = 0
+    var info = ''
+    if (req.query.id) {
+      id = req.query.id
+      info = req.session.appealReasons[id].familyRelationship
+      res.render('illness/family-relationship', {
+        id: id,
+        info: info,
+        scenario: req.session.scenario
+      })
+    } else {
+      res.render('illness/family-relationship')
+    }
+  })
+  router.post('/illness/family-relationship', function (req, res) {
+    var familyRelationship = req.body.familyRelationship
+    var editId = req.body.editId
+    var errorFlag = false
+    var Err = {}
+    var errorList = []
+
+    if (familyRelationship === '') {
+      Err.type = 'blank'
+      Err.text = 'You must tell us more information'
+      Err.href = '#family-relationship'
+      Err.flag = true
+    }
+    if (Err.flag) {
+      errorList.push(Err)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('illness/family-relationship', {
+        errorList: errorList,
+        Err: Err
+      })
+    } else {
+      if (req.body.editId !== '') {
+        req.session.appealReasons[editId].familyRelationship = familyRelationship
+        res.redirect('/check-your-answers')
+      } else {
+        var reasonObject = req.session.appealReasons.pop()
+        reasonObject.familyRelationship = req.body.familyRelationship
         reasonObject.nextStep = 'illness/illness-start-date'
         req.session.appealReasons.push(reasonObject)
         res.redirect('/illness/illness-start-date')
@@ -120,6 +407,7 @@ module.exports = function (router) {
     }
   })
   router.post('/illness/illness-start-date', function (req, res) {
+    console.log('illness')
     var editId = req.body.editId
     var reasonObject = {}
     var illnessStartDay = req.body['illnessStart-day']
@@ -177,15 +465,20 @@ module.exports = function (router) {
       errorFlag = true
     }
     if (errorFlag === true) {
-      req.session.appealReasons.push(reasonObject)
-      res.render('illness/illness-start-date', {
-        errorList: errorList,
-        illnessStartDayErr: illnessStartDayErr,
-        illnessStartDay: illnessStartDay,
-        illnessStartMonth: illnessStartMonth,
-        illnessStartYear: illnessStartYear,
-        inputClasses: inputClasses
-      })
+      if (req.session.signoutFlag === true) {
+        req.session.appealReasons.push(reasonObject)
+        res.redirect('/sign-out')
+      } else {
+        req.session.appealReasons.push(reasonObject)
+        res.render('illness/illness-start-date', {
+          errorList: errorList,
+          illnessStartDayErr: illnessStartDayErr,
+          illnessStartDay: illnessStartDay,
+          illnessStartMonth: illnessStartMonth,
+          illnessStartYear: illnessStartYear,
+          inputClasses: inputClasses
+        })
+      }
     } else {
       if (req.body.editId !== '') {
         illnessStartDate.day = illnessStartDay
@@ -440,12 +733,19 @@ module.exports = function (router) {
   router.get('/illness/illness-information', function (req, res) {
     var id = 0
     var info = ''
+    var reasonObject = {}
+
+    reasonObject = req.session.appealReasons.pop()
+    req.session.appealReasons.push(reasonObject)
+
     if (req.query.id) {
       id = req.query.id
       info = req.session.appealReasons[id].illnessInformation
       res.render('illness/illness-information', {
         id: id,
-        info: info
+        info: info,
+        scenario: req.session.scenario,
+        reason: reasonObject
       })
     } else {
       res.render('illness/illness-information')
