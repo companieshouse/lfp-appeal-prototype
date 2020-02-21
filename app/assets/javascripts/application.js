@@ -8,6 +8,8 @@ if (window.console && window.console.info) {
 $(document).ready(function () {
   window.GOVUKFrontend.initAll()
 
+  $('.print-link').show().attr('aria-hidden', 'false').removeProp('hidden')
+
   $('.govuk-file-upload').change(function () {
     var documentPathArray = []
 
