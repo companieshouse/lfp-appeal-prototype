@@ -1,8 +1,8 @@
 <h3 class="govuk-heading-m">{{appealListIndex}}Illness</h3>
 {% set illPersonHTML %}
-{% if reason.illPerson === 'Someone else' %}
+{% if reason.illPerson === 'otherPerson' %}
   Someone else -
-  {{ reason.otherPerson }}
+  {{ reason.otherPerson | capitalize }}
 {% else %}
   {{ reason.illPerson | capitalize }}
 {% endif %}
