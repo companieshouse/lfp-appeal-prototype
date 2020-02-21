@@ -14,8 +14,8 @@
       <div class="govuk-panel govuk-panel--confirmation">
         <h1 class="govuk-panel__title">Appeal submitted</h1>
         <div class="govuk-panel__body">
-          Your reference number is<br>
-          <strong>{{ scenario.penalties[0].pen1 }}</strong>
+          Your reference number is your company number<br>
+          <strong>{{ scenario.company.number }}</strong>
         </div>
       </div>
 
@@ -24,9 +24,14 @@
         <span class="govuk-body-l govuk-!-font-weight-bold">{{ userEmail }}</span>
         which contains the information you've provided for this appeal.
       </p>
-      <p class="govuk-body">
+
+      <p class="govuk-body hide-print-content print-link" style="display: none;" aria-hidden="true" hidden="hidden">
         <a href="javascript:if(window.print)window.print()" class="govuk-link">Print a copy of this appeal</a>
       </p>
+      <div class="print-content">
+        {% set showChangeLinks = false %}
+        {% include "includes/cya/reason-loop-display.html" %}
+      </div>
       <h2 class="govuk-heading-m">What happens next</h2>
       <p>We’ll review the appeal and email you with a decision within 20 working days. We’ll pause recovery action during this time.</p>
       <p>We may contact you during the review process if we need more information.

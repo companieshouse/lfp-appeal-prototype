@@ -88,6 +88,7 @@ module.exports = function (router) {
       })
     } else {
       reasonObject.illPerson = req.body.illPerson
+      reasonObject.otherPerson = req.body.otherPerson
       reasonObject.complete = false
       switch (req.body.illPerson) {
         case 'director':
@@ -118,6 +119,15 @@ module.exports = function (router) {
           res.redirect('/illness/family-member')
           break
         case 'employee':
+          if (editId !== '') {
+            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          } else {
+            reasonObject.nextStep = '/illness/illness-start-date'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/illness/illness-start-date')
+          break
+        case 'otherPerson':
           if (editId !== '') {
             req.session.appealReasons[editId].illPerson = reasonObject.illPerson
           } else {

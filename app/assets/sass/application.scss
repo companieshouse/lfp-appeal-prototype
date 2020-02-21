@@ -54,6 +54,27 @@ $govuk-assets-path: '/govuk/assets/';
   @include govuk-link-style-default;
   @include govuk-link-print-friendly;
 }
+
+/// print function ///
+
+.print-content {
+  display: none;
+}
+
+@include govuk-media-query($media-type: print) {
+  .print-content {
+    display: block;
+  }
+
+  .hide-print-content {
+    display: none;
+  }
+
+  .govuk-link__print {
+    display: none;
+  }
+}
+
 /// interruption card ///
 
 .circle-step-white {
@@ -106,7 +127,8 @@ $govuk-assets-path: '/govuk/assets/';
     color: govuk-colour("white");
   }
 
-  .govuk-body, .govuk-body-l {
+  .govuk-body,
+  .govuk-body-l {
     color: govuk-colour("white");
   }
 
