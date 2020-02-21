@@ -66,6 +66,10 @@ $govuk-assets-path: '/govuk/assets/';
     display: block;
   }
 
+  .hide-print-content {
+    display: none;
+  }
+
   .govuk-link__print {
     display: none;
   }
