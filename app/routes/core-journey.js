@@ -12,6 +12,7 @@ module.exports = function (router) {
     var checkedAccounts = false
     var checkedCompany = false
     var checkedDisaster = false
+    var checkedAdviceGiven = false
 
     if (req.query.restart === 'yes') {
       req.session.appealReasons = []
@@ -43,6 +44,9 @@ module.exports = function (router) {
         case 'disaster':
           checkedDisaster = true
           break
+        case 'adviceGiven':
+          checkedAdviceGiven = true
+          break
       }
       res.render('choose-reason', {
         checkedIllness: checkedIllness,
@@ -52,6 +56,7 @@ module.exports = function (router) {
         checkedAccounts: checkedAccounts,
         checkedCompany: checkedCompany,
         checkedDisaster: checkedDisaster,
+        checkedAdviceGiven: checkedAdviceGiven,
         id: id
       })
     } else {
@@ -158,6 +163,15 @@ module.exports = function (router) {
             req.session.appealReasons.push(reasonObject)
           }
           res.redirect('/death/reason-death')
+          break
+        case 'adviceGiven':
+          if (editId !== '') {
+            req.session.appealReasons[editId].reason = reasonObject.reason
+          } else {
+            reasonObject.nextStep = '/advice-given/choose-contact-type'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/advice-given/choose-contact-type')
           break
         case 'other':
           if (editId !== '') {

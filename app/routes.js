@@ -55,4 +55,7 @@ require('./routes/rejected-accounts.js')(router)
 // Personal Circumstances
 require('./routes/personal-circumstances.js')(router)
 
+// Advice Given
+require('./routes/advice-given.js')(router)
+
 module.exports = router
