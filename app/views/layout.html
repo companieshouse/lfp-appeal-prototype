@@ -48,6 +48,16 @@
   }) }}
 {% endblock %}
 
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service - Help us improve it by providing <a class="govuk-link" href="https://www.research.net/" target="_blank">feedback <span class="govuk-visually-hidden">(This link opens in a new window)</span></a>'
+  }) }}
+  {% block backLink %}{% endblock %}
+{% endblock %}
+
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
 
 {% if useAutoStoreData %}
@@ -64,7 +74,7 @@
             text: "Clear data"
           },
           {
-            href: "/",
+            href: "/accessibility-statement",
             text: "Accessibility statement"
           }
         ]

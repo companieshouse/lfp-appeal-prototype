@@ -6,17 +6,11 @@
   {% endif %}
   Appeal due to ill health: Tell us when the illness ended
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "continued-illness"
-}) }}
+    text: "Back",
+    href: "cillness/continued-illness"
+  }) }}
 {% endblock %}
 {% block content %}
 

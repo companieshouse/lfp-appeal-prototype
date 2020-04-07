@@ -4,17 +4,11 @@
   Check your answers before submitting your appeal
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "add-appeal-reason"
-}) }}
+    text: "Back",
+    href: "add-appeal-reason"
+  }) }}
 {% endblock %}
 
 {% block content %}
@@ -22,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if mode %}
         <h1 class="govuk-heading-xl">
-         You already have an appeal in progress
+          You already have an appeal in progress
         </h1>
       {% else %}
         <h1 class="govuk-heading-xl">
