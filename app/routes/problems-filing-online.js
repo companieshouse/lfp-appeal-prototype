@@ -48,28 +48,44 @@ module.exports = function (router) {
       })
     } else {
       reasonObject = req.session.appealReasons.pop()
-      if (problemReason === 'Authentication code') {
-        reasonObject.problemReason = req.body.problemReason
-        if (editId !== '') {
-          req.session.appealReasons[editId].problemReason = reasonObject.problemReason
-        } else {
-          req.session.appealReasons.push(reasonObject)
-        }
-        res.redirect('/add-appeal-reason')
-      } else if (problemReason === 'Companies House website' || problemReason === 'Computer problems') {
-        reasonObject.problemReason = req.body.problemReason
-        if (editId !== '') {
-          req.session.appealReasons[editId].problemReason = reasonObject.problemReason
-        } else {
-          req.session.appealReasons.push(reasonObject)
-        }
-        res.redirect('/computer-problem/problem-date')
-      } else {
-        reasonObject.problemReason = req.body.problemReason
-        reasonObject.otherProblemReason = req.body.otherProblemReason
-        reasonObject.nextStep = 'computer-problem/problem-date'
-        req.session.appealReasons.push(reasonObject)
-        res.redirect('/computer-problem/problem-date')
+      reasonObject.problemReason = req.body.problemReason
+      console.log('advice given: ' + req.body.problemReason)
+      switch (req.body.problemReason) {
+        case 'chWebsite':
+          if (editId !== '') {
+            req.session.appealReasons[editId].problemReason = reasonObject.problemReason
+          } else {
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/computer-problem/problem-date')
+          break
+        case 'computer':
+          if (editId !== '') {
+            req.session.appealReasons[editId].problemReason = reasonObject.problemReason
+          } else {
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/computer-problem/problem-date')
+          break
+        case 'adviceGiven':
+          console.log('advice given')
+          if (editId !== '') {
+            req.session.appealReasons[editId].reason = reasonObject.reason
+          } else {
+            reasonObject.nextStep = '/advice-given/choose-contact-type'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/advice-given/choose-contact-type')
+          break
+        case 'other':
+          if (editId !== '') {
+            req.session.appealReasons[editId].reason = reasonObject.reason
+          } else {
+            reasonObject.nextStep = 'other-reason-entry'
+            req.session.appealReasons.push(reasonObject)
+          }
+          res.redirect('/computer-problem/problem-date')
+          break
       }
     }
   })
