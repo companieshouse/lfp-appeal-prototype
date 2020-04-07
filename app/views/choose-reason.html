@@ -6,16 +6,10 @@
   {% endif %}
   You must tell us the reason for the appeal
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "alpha"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
+{% block backLink %}
   {{ govukBackLink({
     text: "Back",
-    href: "/confirm-company"
+    href: "confirm-company"
   }) }}
 {% endblock %}
 {% block content %}

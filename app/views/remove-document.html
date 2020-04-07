@@ -3,17 +3,11 @@
 {% block pageTitle %}
   Remove document
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "evidence-upload"
-}) }}
+    text: "Back",
+    href: "evidence-upload"
+  }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
