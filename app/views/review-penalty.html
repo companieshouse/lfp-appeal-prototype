@@ -5,21 +5,15 @@
   {% endif %}
   Review your penalty details
 {% endblock %}
-
+{% block backLink %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "authenticate"
+  }) }}
+{% endblock %}
 {% block main %}
 
   <div class="govuk-width-container">
-
-    {{ govukPhaseBanner({
-      tag: {
-        text: "alpha"
-      },
-      html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-    }) }}
-    {{ govukBackLink({
-      text: "Back",
-      href: "authenticate"
-    }) }}
     <main role="main" class="govuk-main-wrapper">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
