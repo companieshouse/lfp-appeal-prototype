@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Appeal a late filing penalty
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a trial service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Sorry, the service is unavailable
+      </h1>
+      <p class="govuk-body-l">You will be able to use the service from 9am on Monday 19 September 2019.</p>
+      {% set detailsText %}
+      <p>You can send an appeal to us by email or by post. It should include a full explanation of your appeal.</p>
+      <h2 class="govuk-heading-m">By email</h2>
+      <p class="govuk-body">enquiries@companieshouse.gov.uk</p>
+      <h2 class="govuk-heading-m">By post</h2>
+      <h3 class="govuk-heading-s">England and Wales</h3>
+      <p class="govuk-body">
+        Companies House<br/>
+        PO Box 710<br/>
+        Crown Way<br/>
+        CF14 3UZ
+      </p>
+      <h3 class="govuk-heading-s">Scotland</h3>
+      <p class="govuk-body">
+        Companies House<br/>
+        Fourth Floor<br/>
+        Edinburgh Quay 2<br/>
+        139 Fountainbridge<br/>
+        Edinburgh<br/>
+        EH3 9FF
+      </p>
+      <h3 class="govuk-heading-s">Northern Ireland</h3>
+      <p class="govuk-body">
+        Companies House<br/>
+        2nd Floor<br/>
+        The Linenhall<br/>
+        32-38 Linenhall Street<br/>
+        Belfast<br/>
+        BT2 8BG<br/>
+      </p>
+
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "Other ways to appeal a late filing penalty",
+        html: detailsText
+      }) }}
+    </div>
+  </div>
+{% endblock %}
