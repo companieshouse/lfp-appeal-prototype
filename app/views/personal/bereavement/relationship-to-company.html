@@ -24,7 +24,7 @@
       <form action="" method="post">
         {% if errorList.length > 0 %}
           {{ govukErrorSummary({
-            titleText: "There is a problem with the information you entered",
+            titleText: "There is a problem",
             errorList: errorList
           }) }}
         {% endif %}
@@ -32,7 +32,7 @@
         {% if errTitle.flag %}
           {% set titleError = {
             text: errTitle.text
-          }  %}
+          } %}
         {% else %}
           {% set titleError = false %}
         {% endif %}
