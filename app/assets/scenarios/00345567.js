@@ -13,7 +13,7 @@ module.exports = {
   },
   penalties: [
     {
-      pen1: 'PEN1A/12345677',
+      pen1: 'A00000001',
       pen2: 'PEN2A/12345677',
       periodStart: '1 May 2015',
       periodEnd: '30 April 2016',
