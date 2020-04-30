@@ -58,9 +58,12 @@
           label: {
             text: "Detailed description of the reason",
             isPageHeading: false,
-            classes: 'govuk-heading-large'
+            classes: 'govuk-heading-large',
+            value: otherInformation
           },
-          value: otherInformation
+          hint: {
+            text: "You should include your name and relationship to the company"
+          }
         }) }}
         {{ govukInput({
           id: "edit-id",
