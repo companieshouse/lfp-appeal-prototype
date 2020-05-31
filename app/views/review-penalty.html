@@ -22,100 +22,58 @@
             </span>Penalty details for
             <span class="govuk-!-font-weight-bold">{{ scenario.company.name }}</span>
           </h1>
-          <p class="lede">
-            {% if scenario.penalties | length > 1 %}
-              There are
-              {{ scenario.penalties | length }}
-              outstanding penalties
-            {% endif %}
-          </p>
-          {% for penalty in scenario.penalties %}
-            <h2 class="govuk-heading-m">
-              Accounts period made up to
-              {{ penalty.periodEnd }}
-            </h2>
-            {% if penalty.value === 300 %}
 
-              {% set doubledHTML%}
-              The penalty for accounts period made up to
-              {{ penalty.periodEnd}}
-              has been doubled.
-              <a class="link" title="Why late filing penalties may be doubled" target="_blank" href="https://www.gov.uk/annual-accounts/penalties-for-late-filing">
-                Find out why this penalty was doubled
-              </a>.
-              {% endset %}
+          <h2 class="govuk-heading-m">
+            Accounts period made up to
+            {{ scenario.penalties[0].periodEnd }}
+          </h2>
 
-              {{ govukInsetText({
+          {% if scenario.penalties[0].value === 300 %}
+
+            {% set doubledHTML%}
+            The penalty for accounts period made up to
+            {{ penalty.periodEnd}}
+            has been doubled.
+            <a class="link" title="Why late filing penalties may be doubled" target="_blank" href="https://www.gov.uk/annual-accounts/penalties-for-late-filing">
+              Find out why this penalty was doubled
+            </a>.
+            {% endset %}
+
+            {{ govukInsetText({
                 html: doubledHTML
               }) }}
-            {% endif %}
-            <table class="govuk-table">
-              <caption class="govuk-table__caption">Penalty reference:
-                {{ penalty.pen1 }}</caption>
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th class="govuk-table__header" scope="col">Fee</th>
-                  <th class="govuk-table__header" scope="col">Date</th>
-                  <th class="govuk-table__header" scope="col">Fee Amount</th>
-                </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">Late filing penalty</td>
-                  <td class="govuk-table__cell">{{ penalty.filed }}</td>
-                  <td class="govuk-table__cell">£{{ penalty.value }}</td>
-                </tr>
-                {% if penalty.fees.solicitor %}
-                  {% for solicitor in penalty.fees.solicitor %}
-                    <tr class="govuk-table__row">
-                      <td class="govuk-table__cell">
-                        {{ solicitor.name }}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ solicitor.date }}
-                      </td>
-                      <td class="govuk-table__cell">£{{ solicitor.value }}</td>
-                    </tr>
-                  {% endfor %}
-                {% endif %}
-                {% if penalty.fees.court %}
-                  {% for court in penalty.fees.court %}
-                    <tr class="govuk-table__row">
-                      <td class="govuk-table__cell">
-                        {{ court.name }}
-                      </td>
-                      <td class="govuk-table__cell">
-                        {{ court.date }}
-                      </td>
-                      <td class="govuk-table__cell">£{{ court.value }}</td>
-                    </tr>
-                  {% endfor %}
-                {% endif %}
-                {% if scenario.penalties | length > 1 %}
-                  <tr class="govuk-table__row">
-                    <td colspan="2" class="table-total govuk-table__cell">
-                      Sub-total:
-                    </td>
-                    <td class="govuk-table__cell">
-                      £{{ penalty.value + penalty.totalFees }}
-                    </td>
-                  </tr>
-                {% else %}
-                  <tr class="govuk-table__row">
-                    <td colspan="2" class="table-total govuk-table__cell">
-                      Total:
-                    </td>
-                    <td class="govuk-table__cell">
-                      £{{ penalty.value + penalty.totalFees }}
-                    </td>
-                  </tr>
-                {% endif %}
-              </tbody>
-            </table>
-          {% endfor %}
-          {% if scenario.penalties | length > 1 %}
-            <p class="govuk-!-font-weight-bold govuk-!-font-size-24">Total amount due: &pound;{{ totalDue }}</p>
           {% endif %}
+
+          <table class="govuk-table">
+            <caption class="govuk-table__caption">Penalty reference:
+              {{ scenario.penalties[0].pen1 }}</caption>
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col">Fee</th>
+                <th class="govuk-table__header" scope="col">Date</th>
+                <th class="govuk-table__header" scope="col">Fee Amount</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">Late filing penalty</td>
+                <td class="govuk-table__cell">{{ scenario.penalties[0].filed }}</td>
+                <td class="govuk-table__cell">£{{ scenario.penalties[0].value }}</td>
+              </tr>
+              <!-- {% if penalty.fees.solicitor %} {% for solicitor in penalty.fees.solicitor %} <tr class="govuk-table__row"> <td class="govuk-table__cell"> {{ solicitor.name }} </td> <td class="govuk-table__cell"> {{ solicitor.date }} </td> <td
+              class="govuk-table__cell">£{{ solicitor.value }}</td> </tr> {% endfor %} {% endif %} {% if penalty.fees.court %} {% for court in penalty.fees.court %} <tr class="govuk-table__row"> <td class="govuk-table__cell"> {{ court.name }} </td> <td
+              class="govuk-table__cell"> {{ court.date }} </td> <td class="govuk-table__cell">£{{ court.value }}</td> </tr> {% endfor %} {% endif %} -->
+
+              <tr class="govuk-table__row">
+                <td colspan="2" class="table-total govuk-table__cell">
+                  Total:
+                </td>
+                <td class="govuk-table__cell">
+                  £{{ scenario.penalties[0].value + scenario.penalties[0].totalFees }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           {{ govukButton({
             text: "Continue",

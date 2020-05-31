@@ -52,17 +52,19 @@
 {% endif %}
 
 {% if reason.illDirector !== '' %}
-  {% set illDirectorHTML = {
-    key: {
-      text: "Name of director"
-    },
-    value: {
-      html: reason.illDirector
-    },
-    actions: {
-      items: [illDirectorChange]
-    }
-  } %}
+  {% if scenario.company.directors > 1 %}
+    {% set illDirectorHTML = {
+      key: {
+        text: "Name of director"
+      },
+      value: {
+        html: reason.illDirector
+      },
+      actions: {
+        items: [illDirectorChange]
+      }
+    } %}
+  {% endif %}
 {% endif %}
 
 {% if reason.familyMember !== '' %}
