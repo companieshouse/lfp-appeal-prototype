@@ -25,7 +25,9 @@
       {% set multipleDirectorsHTML %}
 
       {% if reason.illDirector !== '' %}
-        Include why the other directors were not able to file.
+        {% if scenario.company.directors > 1 %}
+          Include why the other directors were not able to file.
+        {% endif %}
       {% endif %}
       {% endset %}
 

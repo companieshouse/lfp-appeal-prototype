@@ -81,71 +81,18 @@ module.exports = function (router) {
       res.redirect('/authenticate')
     }
   })
-  // Authentication code (CHS account)
-  router.get('/authenticate', function (req, res) {
-    res.render('authenticate', {
+  router.get('/select-the-penalty', function (req, res) {
+    res.render('select-the-penalty', {
       scenario: req.session.scenario
     })
   })
-  router.post('/authenticate', function (req, res) {
-    if (req.session.scenario != null) {
-      var authCode = req.body.authCode
-      var errorFlag = false
-      var authCodeErr = {}
-      var errorList = []
-
-      authCode = authCode.toUpperCase()
-
-      if (authCode !== req.session.scenario.company.authCode && authCode.length > 0) {
-        authCodeErr.type = 'invalid'
-        authCodeErr.text = 'The authentication code you entered isn\'t valid'
-        authCodeErr.href = '#auth-code'
-        authCodeErr.flag = true
-      }
-      if (authCode === '') {
-        authCodeErr.type = 'blank'
-        authCodeErr.text = 'You must enter an authentication code'
-        authCodeErr.href = '#auth-code'
-        authCodeErr.flag = true
-      }
-      if (authCodeErr.flag) {
-        errorList.push(authCodeErr)
-        errorFlag = true
-      }
-
-      // TEST ERROR FLAG
-      if (errorFlag === true) {
-        res.render('authenticate', {
-          scenario: req.session.scenario,
-          errorList: errorList,
-          authCodeErr: authCodeErr,
-          authCode: req.body.authCode
-        })
-      } else {
-        res.redirect('/review-penalty')
-      }
-    } else {
-      res.redirect('/start')
-    }
-  })
-
-  // Review penalty details
-  router.get('/review-penalty', function (req, res) {
-    if (req.session.scenario != null) {
-      req.session.appealReasons = []
-      var totalDue = 0
-
-      for (var i = 0; i < req.session.scenario.penalties.length; i++) {
-        totalDue += (req.session.scenario.penalties[i].value + req.session.scenario.penalties[i].totalFees)
-      }
-      req.session.totalDue = totalDue
-
-      res.render('review-penalty', {
-        scenario: req.session.scenario,
-        totalDue: totalDue
-      })
-    } else {
-      res.redirect('/start')
+  router.post('/select-the-penalty', function (req, res) {
+    switch (req.body.selectPenalty) {
+      case 'pen1':
+        res.redirect('review-penalty')
+        break
+      case 'pen2':
+        res.redirect('review-penalty')
     }
   })
   // Authentication code (CHS account)
@@ -189,7 +136,11 @@ module.exports = function (router) {
           authCode: req.body.authCode
         })
       } else {
-        res.redirect('/review-penalty')
+        if (req.session.scenario.penalties.length > 1) {
+          res.redirect('/select-the-penalty')
+        } else {
+          res.redirect('/review-penalty')
+        }
       }
     } else {
       res.redirect('/start')
@@ -198,6 +149,8 @@ module.exports = function (router) {
 
   // Review penalty details
   router.get('/review-penalty', function (req, res) {
+    var reasonObject = {}
+
     if (req.session.scenario != null) {
       req.session.appealReasons = []
       var totalDue = 0
@@ -209,12 +162,14 @@ module.exports = function (router) {
 
       res.render('review-penalty', {
         scenario: req.session.scenario,
+        selectPenalty: req.session.selectPenalty,
         totalDue: totalDue
       })
     } else {
       res.redirect('/start')
     }
   })
+
   router.get('/confirm-company', function (req, res) {
     res.render('confirm-company', {
       scenario: req.session.scenario

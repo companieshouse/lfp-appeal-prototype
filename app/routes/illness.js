@@ -92,13 +92,23 @@ module.exports = function (router) {
       reasonObject.complete = false
       switch (req.body.illPerson) {
         case 'director':
-          if (editId !== '') {
-            req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+          if (req.session.scenario.company.director > 1) {
+            if (editId !== '') {
+              req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+            } else {
+              reasonObject.nextStep = 'illness/ill-director'
+              req.session.appealReasons.push(reasonObject)
+            }
+            res.redirect('/illness/ill-director')
           } else {
-            reasonObject.nextStep = 'illness/ill-director'
-            req.session.appealReasons.push(reasonObject)
+            if (editId !== '') {
+              req.session.appealReasons[editId].illPerson = reasonObject.illPerson
+            } else {
+              reasonObject.nextStep = 'illness/illness-start-date'
+              req.session.appealReasons.push(reasonObject)
+            }
+            res.redirect('/illness/illness-start-date')
           }
-          res.redirect('/illness/ill-director')
           break
         case 'accountant':
           if (editId !== '') {
