@@ -6,24 +6,18 @@
   {% endif %}
   Add another reason for your appeal
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "evidence"
-}) }}
+    text: "Back",
+    href: "evidence"
+  }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorList.length > 0 %}
         {{ govukErrorSummary({
-          titleText: "There is a problem with your answer",
+          titleText: "There is a problem",
           errorList: errorList
         }) }}
       {% endif %}

@@ -46,48 +46,33 @@
           {% endif %}
         {% endif %}
 
-        {% set otherInput %}
-        {{ govukInput({
-              id: "other-problem-reason",
-              name: "otherProblemReason",
-              classes: "",
-              errorMessage: otherProblemReasonError,
-              label: {
-                text: "Short description of the reason"
-              }
-            }) }}
-        {% endset %}
-
         {{ govukRadios({
-                idPrefix: "problem-reason",
-                name: "problemReason",
-                errorMessage: problemReasonError,
+                idPrefix: "contact-type",
+                name: "contactType",
+                errorMessage: contactTypeError,
                 fieldset: {
                   legend: {
-                    text: 'What was the problem?',
+                    text: 'How did you contact us?',
                     isPageHeading: true,
                     classes: 'govuk-fieldset__legend--xl'
                   }
                 },
                 items: [
-                {
-                  value: "adviceGiven",
-                  text: "Advice given"
-                },
-                {
-                    value: "chWebsite",
-                    text: "The Companies House website was down"
+                  {
+                    value: "contactByPhone",
+                    text: "Phone"
                   },
                   {
-                    value: "computer",
-                    text: "I had computer problems"
+                    value: "contactByPaper",
+                    text: "Paper"
                   },
                   {
-                    value: "other",
-                    text: "I'm applying for another reason",
-                    conditional: {
-                      html: otherInput
-                    }
+                    value: "contactByEmail",
+                    text: "Email"
+                  },
+                  {
+                    value: "contactByOnline",
+                    text: "Online"
                   }
                 ]
               }) }}

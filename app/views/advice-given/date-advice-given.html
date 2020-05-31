@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appealing due to rejected accounts: Tell us when you filed
+  Appealing due to company change: Tell us when the advice was given
 {% endblock %}
 {% block beforeContent %}
   {{ govukPhaseBanner({
@@ -15,7 +15,7 @@
 }) }}
   {{ govukBackLink({
   text: "Back",
-  href: "/choose-reason"
+  href: "contact-information"
 }) }}
 {% endblock %}
 {% block content %}
@@ -31,11 +31,11 @@
         {% endif %}
 
         {% if errorList.length > 0 %}
-          {% set accountDateError = {
-            text: accountDateErr.text
+          {% set adviceGivenDateError = {
+            text: adviceGivenDateErr.text
           } %}
         {% else %}
-          {% set accountDateError = false %}
+          {% set adviceGivenDateError = false %}
         {% endif %}
 
         {% set hintHTML %}
@@ -43,37 +43,39 @@
         {% endset -%}
 
         {{ govukDateInput({
-          id: "accounts-date",
-          namePrefix: "accountsDate",
+          id: "advice-given-date",
+          namePrefix: "adviceGivenDate",
           value: info,
-          errorMessage: accountsDateError,
+          errorMessage: adviceGivenDateError,
           fieldset: {
             legend: {
-              text: "When did you file your accounts?",
+              text: "When was the advice given?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
             }
           },
-          items: [
-            {
-              classes: inputClasses.day,
-              name: 'day',
-              value: accountsDay
-            },
-            {
-              classes: inputClasses.month,
-              name: 'month',
-              value: accountsMonth
-            },
-            {
-              classes: inputClasses.year,
-              name: 'year',
-              value: accountsYear
-            }
+          hint: {
+                html: hintHTML
+              },
+                items: [
+                    {
+                      classes: "govuk-input--width-2",
+                      name: "day",
+                      value: adviceGivenDate.day
+                    },
+                    {
+                      classes: "govuk-input--width-2",
+                      name: "month",
+                      value: adviceGivenDate.month
+                    },
+                    {
+                      classes: "govuk-input--width-4",
+                      name: "year",
+                      value: adviceGivenDate.year
+                    }
             ]
           })
         }}
-
         {{ govukInput({
           id: "editId",
           name: "editId",

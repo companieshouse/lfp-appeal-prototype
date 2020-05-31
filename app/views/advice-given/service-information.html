@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  {% if errorList.length > 0 %}
+    Error:
+  {% endif %}
+  Appeal due to advice given: Tell us more
+{% endblock %}
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+  tag: {
+    text: "alpha"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "date-advice-given"
+}) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorList.length > 0 %}
+        {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: errorList
+      }) }}
+      {% endif %}
+      <form action="" method="post">
+        {% if Err.flag %}
+
+          {% set textHtml %}
+          {{ govukInput({
+            id: "service-information-other",
+            name: "serviceInformationOther",
+            type: "tel",
+            classes: "govuk-!-width-one-third",
+            label: {
+              text: "Service Name"
+            }
+          }) }}
+          {% endset -%}
+
+          {{ govukRadios({
+            idPrefix: "service-information",
+            name: "serviceInformation",
+            fieldset: {
+              legend: {
+                text: "What service did you use?",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            errorMessage: {text: "You must select the service you used"},
+            hint: {
+              text: "Select one option."
+            },
+            items: [
+              {
+                value: "companies-house-service",
+                text: "Companies House Service"
+              },
+              {
+                value: "webfiling",
+                text: "Web Filing"
+              },
+              {
+                value: "other",
+                text: "Other",
+                conditional: {
+                  html: textHtml
+                }
+              }
+            ]
+          }) }}
+       
+        {% else %}
+
+
+          {% set textHtml %}
+          {{ govukInput({
+            id: "service-information-other",
+            name: "serviceInformationOther",
+            type: "tel",
+            classes: "govuk-!-width-one-third",
+            label: {
+              text: "Service Name"
+            }
+          }) }}
+          {% endset -%}
+
+          {{ govukRadios({
+            idPrefix: "service-information",
+            name: "serviceInformation",
+            fieldset: {
+              legend: {
+                text: "How would you prefer to be contacted?",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+              }
+            },
+            hint: {
+              text: "Select one option."
+            },
+            items: [
+              {
+                value: "companies-house-service",
+                text: "Companies House Service"
+              },
+              {
+                value: "webfiling",
+                text: "Web Filing"
+              },
+              {
+                value: "other",
+                text: "Other",
+                conditional: {
+                  html: textHtml
+                }
+              }
+            ]
+          }) }}
+          
+  
+              
+        {% endif %}
+
+        {{ govukInput({
+          id: "editId",
+          name: "editId",
+          type: "hidden",
+          value: id
+        }) }}
+
+        {{ govukButton({
+              text: "Continue"
+            }) }}
+        <p>
+          <a href="/sign-out" class="govuk-link">Save and sign out</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</main>
+</div>
+
+{% endblock %}

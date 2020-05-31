@@ -6,16 +6,10 @@
   {% endif %}
   You must tell us the reason for the appeal
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "alpha"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
+{% block backLink %}
   {{ govukBackLink({
     text: "Back",
-    href: "/confirm-company"
+    href: "confirm-company"
   }) }}
 {% endblock %}
 {% block content %}
@@ -32,7 +26,7 @@
 
         {% if errorList.length > 0 %}
           {{ govukErrorSummary({
-              titleText: "There is an error on the page",
+              titleText: "There is a problem",
               errorList: errorList
             }) }}
         {% endif %}
@@ -97,6 +91,11 @@
               value: "accounts",
               text: "Accounting issues",
               checked: checkedAccounts
+            },
+            {
+              value: "adviceGiven",
+              text: "Advice given",
+              checked: checkedAdviceGiven
             },
             {
               value: "other",

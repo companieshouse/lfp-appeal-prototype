@@ -5,24 +5,18 @@
   {% endif %}
   Tell us your company number
 {% endblock %}
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "signin"
-}) }}
+    text: "Back",
+    href: "signin"
+  }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorList.length > 0 %}
         {{ govukErrorSummary({
-        titleText: "There is a problem with the information you gave us",
+        titleText: "There is a problem",
         errorList: errorList
       }) }}
       {% endif %}

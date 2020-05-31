@@ -4,17 +4,11 @@
   Check your answers before submitting your appeal
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-    text: "alpha"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
+{% block backLink %}
   {{ govukBackLink({
-  text: "Back",
-  href: "add-appeal-reason"
-}) }}
+    text: "Back",
+    href: "add-appeal-reason"
+  }) }}
 {% endblock %}
 
 {% block content %}
@@ -49,6 +43,14 @@
             },
             value: {
               text: scenario.company.number
+            }
+          },
+          {
+            key: {
+              text: "Type"
+            },
+            value: {
+              text: "Late filing penalty (" + scenario.penalties[0].pen1 + ")"
             }
           },
           {
