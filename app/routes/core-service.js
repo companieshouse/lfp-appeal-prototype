@@ -49,7 +49,7 @@ module.exports = function (router) {
 
     if (
       req.session.penaltyReference !== 'A00000001' &&
-      req.session.penaltyReference !== 'B00000001'
+      req.session.penaltyReference !== 'PEN1A/00222333'
     ) {
       penaltyReferenceErr.type = 'invalid'
       penaltyReferenceErr.text = 'You must enter your reference number exactly as shown on your penalty notice'
