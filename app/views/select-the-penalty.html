@@ -19,9 +19,25 @@
         <div class="govuk-grid-column-two-thirds">
           <form action="" method="post" id="penaltyForm">
 
+            {% if errorList.length > 0 %}
+              {{ govukErrorSummary({
+                  titleText: "There is a problem",
+                  errorList: errorList
+                }) }}
+            {% endif %}
+
+            {% if errorList.length > 0 %}
+              {% set appealPenaltyError = {
+                text: appealPenaltyErr.text
+              } %}
+            {% else %}
+              {% set appealPenaltyError = false %}
+            {% endif %}
+
             {{ govukRadios({
   idPrefix: "select-penalty",
   name: "selectPenalty",
+  errorMessage: appealPenaltyError,
   fieldset: {
     legend: {
       text: "Select the penalty you want to appeal",
