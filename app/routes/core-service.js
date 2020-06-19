@@ -87,12 +87,35 @@ module.exports = function (router) {
     })
   })
   router.post('/select-the-penalty', function (req, res) {
-    switch (req.body.selectPenalty) {
-      case 'pen1':
-        res.redirect('review-penalty')
-        break
-      case 'pen2':
-        res.redirect('review-penalty')
+    var errorFlag = false
+    var errorList = []
+    var appealPenaltyErr = {}
+
+    if (req.session.selectPenalty === '') {
+      appealPenaltyErr.type = 'blank'
+      appealPenaltyErr.text = 'Select the penalty you want to appeal'
+      appealPenaltyErr.href = '#select-the-penalty'
+      appealPenaltyErr.flag = true
+    }
+    if (appealPenaltyErr.flag) {
+      errorList.push(appealPenaltyErr)
+      errorFlag = true
+    }
+
+    // TEST ERROR FLAG
+    if (errorFlag === true) {
+      res.render('penalty-reference', {
+        errorList: errorList,
+        scenario: req.session.scenario
+      })
+    } else {
+      switch (req.body.selectPenalty) {
+        case 'pen1':
+          res.redirect('review-penalty')
+          break
+        case 'pen2':
+          res.redirect('review-penalty')
+      }
     }
   })
   // Authentication code (CHS account)
