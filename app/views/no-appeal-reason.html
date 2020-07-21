@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  No appeal reason
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="post">
+
+        <h1 class="govuk-heading-xl">You need a reason to appeal a late filing penalty</h1>
+        <p>You may have removed the entered reasons for your appeal, or you may have come to this page in error.</p>
+        <p>
+          <a href="/choose-reason">Choose a reason</a>
+          to continue with your appeal.</p>
+
+        {{ govukInput({
+          id: "id",
+          name: "id",
+          type: "hidden",
+          value: id
+        }) }}
+
+        {{ govukButton({ text: "Continue", href: "/choose-reason" }) }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
