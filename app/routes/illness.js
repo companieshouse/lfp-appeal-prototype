@@ -770,7 +770,7 @@ module.exports = function (router) {
 
     if (illnessInformation === '') {
       Err.type = 'blank'
-      Err.text = 'You must tell us more information'
+      Err.text = 'You must tell us how this affected your ability to file on time'
       Err.href = '#illness-information'
       Err.flag = true
     }

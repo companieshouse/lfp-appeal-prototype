@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Appeal due to ill health: Tell us about the illness
+  Appeal due to ill health: How did this affect your ability to file on time?
 {% endblock %}
 {% block backLink %}
   {{ govukBackLink({
@@ -44,7 +44,7 @@
                 classes: 'govuk-heading-large'
               },
               errorMessage: {
-                text: "Enter information"
+                text: "You must tell us how this affected your ability to file on time"
               }
             }) }}
         {% else %}
