@@ -503,7 +503,7 @@ module.exports = function (router) {
         reasonObject.illnessStartDate = illnessStartDate
         reasonObject.nextStep = 'illness/continued-illness'
         req.session.appealReasons.push(reasonObject)
-        res.redirect('/illness/continued-illness')
+        res.redirect('/illness/illness-information')
       }
     }
   })

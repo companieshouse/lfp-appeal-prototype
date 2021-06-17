@@ -89,7 +89,7 @@
     }
   } %}
 {% endif %}
-
+<!--
 {% if reason.continuedIllness === 'yes' %}
   {% set endDateHTML = {
     key: {
@@ -115,6 +115,7 @@
     }
   } %}
 {% endif %}
+-->
 
 {{ govukSummaryList({
 rows: [
@@ -139,10 +140,7 @@ text: reason.illnessStartDate.day + " " + reason.illnessStartDate.month | displa
 },
 actions: {
 items: [startDateChange]
-}
 },
-endDateHTML,
-{
 key: {
 text: "Further information"
 },
