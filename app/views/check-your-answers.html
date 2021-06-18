@@ -80,9 +80,7 @@
       {% set showChangeLinks = true %}
       {% include "includes/cya/reason-loop-display.html" %}
 
-      <p class="govuk-!-margin-bottom-7 govuk-!-margin-top-7">
-        <a href="/choose-reason" class="govuk-link">Add another reason</a>
-      </p>
+
       {% if mode %}
         <form action="" method="post">
           {{ govukButton({
@@ -104,9 +102,7 @@
           {{ govukButton({
             text: "Confirm and submit appeal"
           }) }}
-          <p>
-            <a href="/sign-out" class="govuk-link">Save and sign out</a>
-          </p>
+
         </form>
       {% endif %}
     </div>

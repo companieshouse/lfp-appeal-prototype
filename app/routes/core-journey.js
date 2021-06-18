@@ -260,8 +260,8 @@ module.exports = function (router) {
             reasonObject.nextStep = 'check-your-answers'
             res.redirect('/check-your-answers')
           } else {
-            reasonObject.nextStep = 'add-appeal-reason'
-            res.redirect('/add-appeal-reason')
+            reasonObject.nextStep = 'check-your-answers'
+            res.redirect('/check-your-answers')
           }
           break
       }
@@ -283,7 +283,7 @@ module.exports = function (router) {
       if (req.session.appealReasons.length > 1) {
         continueLink = 'check-your-answers'
       } else {
-        continueLink = 'add-appeal-reason'
+        continueLink = 'check-your-answers'
       }
     }
 
