@@ -6,14 +6,20 @@ module.exports = function (router) {
   })
   router.get('/other/reason-other', function (req, res) {
     var id = 0
+    var userName = ''
+    var userRelationship = ''
     var otherReason = ''
     var otherInformation = ''
     if (req.query.id) {
       id = req.query.id
+      userName = req.session.appealReasons[id].userName
+      userRelationship = req.session.appealReasons[id].userRelationship
       otherReason = req.session.appealReasons[id].otherReason
       otherInformation = req.session.appealReasons[id].otherInformation
       res.render('other/reason-other', {
         id: id,
+        userName: userName,
+        userRelationship: userRelationship,
         otherReason: otherReason,
         otherInformation: otherInformation
       })
