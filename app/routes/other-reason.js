@@ -38,18 +38,18 @@ module.exports = function (router) {
     var errorList = []
 
     if (userName === '') {
-      errDescription.type = 'blank'
-      errDescription.text = 'You must tell us your name'
-      errDescription.href = '#user-name'
-      errDescription.flag = true
-      errorList.push(errDescription)
+      errName.type = 'blank'
+      errName.text = 'You must tell us your name'
+      errName.href = '#user-name'
+      errName.flag = true
+      errorList.push(errName)
     }
     if (userRelationship === '') {
-      errDescription.type = 'blank'
-      errDescription.text = 'You must tell us your relationship to the company'
-      errDescription.href = '#user-relationship'
-      errDescription.flag = true
-      errorList.push(errDescription)
+      errRelationship.type = 'blank'
+      errRelationship.text = 'You must tell us your relationship to the company'
+      errRelationship.href = '#user-relationship'
+      errRelationship.flag = true
+      errorList.push(errRelationship)
     }
     if (otherInformation === '') {
       errDescription.type = 'blank'

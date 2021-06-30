@@ -32,6 +32,22 @@
           {% set titleError = false %}
         {% endif %}
 
+        {% if errName.flag %}
+          {% set nameError = {
+            text: errName.text
+          } %}
+        {% else %}
+          {% set nameError = false %}
+        {% endif %}
+
+        {% if errRelationship.flag %}
+          {% set relationshipError = {
+            text: errRelationship.text
+          } %}
+        {% else %}
+          {% set relationshipError = false %}
+        {% endif %}
+
 {% set hintHTML %}
 <details class="govuk-details" data-module="govuk-details">
   <summary class="govuk-details__summary">
