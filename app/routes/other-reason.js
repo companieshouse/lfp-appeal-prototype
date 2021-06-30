@@ -23,12 +23,28 @@ module.exports = function (router) {
   })
   router.post('/other/reason-other', function (req, res) {
     var otherInformation = req.body.otherInformation
+    var userName  = req.body.userName
+    var userRelationship = req.body.userRelationship
     var otherReason = req.body.otherReason
     var editId = req.body.editId
     var errTitle = {}
     var errDescription = {}
     var errorList = []
 
+    if (userName === '') {
+      errDescription.type = 'blank'
+      errDescription.text = 'You must tell us your name'
+      errDescription.href = '#user-name'
+      errDescription.flag = true
+      errorList.push(errDescription)
+    }
+    if (userRelationship === '') {
+      errDescription.type = 'blank'
+      errDescription.text = 'You must tell us your relationship to the company'
+      errDescription.href = '#user-relationship'
+      errDescription.flag = true
+      errorList.push(errDescription)
+    }
     if (otherInformation === '') {
       errDescription.type = 'blank'
       errDescription.text = 'You must give us more information'
@@ -52,17 +68,23 @@ module.exports = function (router) {
         errDescription: errDescription,
         id: editId,
         otherReason: otherReason,
-        otherInformation: otherInformation
+        otherInformation: otherInformation,
+        userName: userName,
+        userRelationship: userRelationship
       })
     } else {
       if (editId !== '') {
         req.session.appealReasons[editId].otherReason = req.body.otherReason
         req.session.appealReasons[editId].otherInformation = req.body.otherInformation
+        req.session.appealReasons[editId].userName = req.body.userName
+        req.session.appealReasons[editId].userRelationship = req.body.userRelationship
         res.redirect('/check-your-answers')
       } else {
         var reasonObject = req.session.appealReasons.pop()
         reasonObject.otherReason = req.body.otherReason
         reasonObject.otherInformation = req.body.otherInformation
+        reasonObject.userName = req.body.userName
+        reasonObject.userRelationship = req.body.userRelationship
         req.session.appealReasons.push(reasonObject)
         res.redirect('/evidence')
       }

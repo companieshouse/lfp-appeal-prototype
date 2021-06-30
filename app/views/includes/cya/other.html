@@ -9,6 +9,15 @@
 {% endset %}
 
 {% if showChangeLinks === true %}
+{% set nameChange = {
+ href: "/other/reason-other?id=" + loop.index0,
+ text: "Change",
+ visuallyHiddenText: "name"
+} %}{% set relationshipChange = {
+ href: "/other/reason-other?id=" + loop.index0,
+ text: "Change",
+ visuallyHiddenText: "relationship to the company"
+} %}
   {% set reasonTitleChange = {
    href: "/other/reason-other?id=" + loop.index0,
    text: "Change",
@@ -25,16 +34,42 @@
 rows: [
   {
     key: {
-      text: "Reason"
+      text: "Name"
     },
     value: {
-       html: otherReasonHTML
+       html: reason.userName
     },
      actions: {
         items: [
-          reasonTitleChange
+          nameChange
     ]
   }
+},
+{
+  key: {
+    text: "Relationship"
+  },
+  value: {
+     html: reason.userRelationship
+  },
+   actions: {
+      items: [
+        relationshipChange
+  ]
+}
+},
+{
+  key: {
+    text: "Reason"
+  },
+  value: {
+     html: otherReasonHTML
+  },
+   actions: {
+      items: [
+        reasonTitleChange
+  ]
+}
 },
 {
   key: {
