@@ -35,6 +35,8 @@ module.exports = function (router) {
     var editId = req.body.editId
     var errTitle = {}
     var errDescription = {}
+    var errName = {}
+    var errRelationship = {}
     var errorList = []
 
     if (userName === '') {
@@ -72,6 +74,8 @@ module.exports = function (router) {
         errorList: errorList,
         errTitle: errTitle,
         errDescription: errDescription,
+        errName: errName,
+        errRelationship: errRelationship,
         id: editId,
         otherReason: otherReason,
         otherInformation: otherInformation,
