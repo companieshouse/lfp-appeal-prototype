@@ -28,10 +28,13 @@
           {{ serviceName }}
         {% endif %}
       </h1>
-      {{ govukInsetText({
-  text: "You can currently only submit one appeal for each penalty notice."
-}) }}
+
       <p class="govuk-body-l">Use this service to appeal a penalty issued to a company for not filing its annual accounts on time.</p>
+
+      {{ govukInsetText({
+      text: "You can currently only submit one appeal for each penalty notice."
+      }) }}
+      
       <p>It may take up to 30 minutes to complete this application.</p>
       {{ govukButton({
         text: "Start now",

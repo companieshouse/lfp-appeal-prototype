@@ -22,15 +22,6 @@
       }) }}
       {% endif %}
 
-      {% set multipleDirectorsHTML %}
-
-      {% if reason.illDirector !== '' %}
-        {% if scenario.company.directors > 1 %}
-          Include why the other directors were not able to file.
-        {% endif %}
-      {% endif %}
-      {% endset %}
-
       <h1 class="govuk-heading-xl">How did this affect your ability to file on time?</h1>
       <form action="" method="post">
         {% if errName.flag %}
@@ -83,7 +74,7 @@
               id: "illness-information",
               rows: '8',
               label: {
-                html: "Include all dates and why no one else could file. Anything you tell us to support your application will be kept confidential.",
+                html: "Anything you tell us to support your application will be kept confidential.",
                 isPageHeading: false,
                 classes: 'govuk-heading-large'
               },
@@ -98,7 +89,7 @@
               value: info,
               rows: '8',
               label: {
-                text: "Include all dates and why no one else could file. Anything you tell us to support your application will be kept confidential.",
+                text: "Anything you tell us to support your application will be kept confidential.",
                 isPageHeading: false,
                 classes: 'govuk-heading-large'
               },
