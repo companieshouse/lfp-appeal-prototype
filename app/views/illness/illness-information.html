@@ -33,6 +33,50 @@
 
       <h1 class="govuk-heading-xl">How did this affect your ability to file on time?</h1>
       <form action="" method="post">
+        {% if errName.flag %}
+          {% set nameError = {
+            text: errName.text
+          } %}
+        {% else %}
+          {% set nameError = false %}
+        {% endif %}
+
+        {% if errRelationship.flag %}
+          {% set relationshipError = {
+            text: errRelationship.text
+          } %}
+        {% else %}
+          {% set relationshipError = false %}
+        {% endif %}
+
+{% set hintHTML %}
+<details class="govuk-details" data-module="govuk-details">
+  <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      What details should I include to support my appeal?
+    </span>
+  </summary>
+  <div class="govuk-details__text">
+    <p>You should include:</p>
+    <ul class="govuk-list govuk-list--bullet">
+    <li>any relevant dates - for example, the dates that a problem began and ended</li>
+    <li>names of people or organisations that prevented accounts from being filed on time, and their relationship to the company</li>
+    </ul>
+    <p>If the person who usually files the accounts was not able to, tell us why no one else could file them.</p>
+    <p>If you were give advice by Companies House, include details of when and how you contacted us.</p>
+  </div>
+</details>
+{% endset %}
+
+        {{ govukInput({
+          id: "user-name",
+          name: "userName",
+          errorMessage: nameError,
+          label: {
+            text: "Your name"
+          },
+          value: userName
+        }) }}
         {% if Err.flag %}
           {{ govukTextarea({
               name: "illnessInformation",
@@ -59,7 +103,7 @@
                 classes: 'govuk-heading-large'
               },
               hint: {
-                html: multipleDirectorsHTML
+                html: hintHTML
               }
             }) }}
         {% endif %}
@@ -74,7 +118,7 @@
         {{ govukButton({
               text: "Continue"
             }) }}
-        
+
       </form>
     </div>
   </div>
