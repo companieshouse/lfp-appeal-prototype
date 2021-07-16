@@ -140,7 +140,9 @@ text: reason.illnessStartDate.day + " " + reason.illnessStartDate.month | displa
 },
 actions: {
 items: [startDateChange]
+}
 },
+{
 key: {
 text: "Your name"
 },
@@ -149,7 +151,9 @@ html: reason.userName
 },
 actions: {
 items: [infoChange]
+}
 },
+{
 key: {
 text: "Further information"
 },
@@ -158,6 +162,7 @@ html: reason.illnessInformation | safe | nl2br
 },
 actions: {
 items: [infoChange]
+}
 },
 documents
 ]
