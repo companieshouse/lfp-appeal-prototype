@@ -763,6 +763,7 @@ module.exports = function (router) {
   })
   router.post('/illness/illness-information', function (req, res) {
     var illnessInformation = req.body.illnessInformation
+    var userName = req.body.userName
     var editId = req.body.editId
     var errorFlag = false
     var Err = {}
@@ -786,10 +787,12 @@ module.exports = function (router) {
     } else {
       if (req.body.editId !== '') {
         req.session.appealReasons[editId].illnessInformation = illnessInformation
+        req.session.appealReasons[editId].userName = userName
         res.redirect('/check-your-answers')
       } else {
         var reasonObject = req.session.appealReasons.pop()
         reasonObject.illnessInformation = req.body.illnessInformation
+        reasonObject.userName = req.body.userName
         reasonObject.nextStep = 'evidence'
         req.session.appealReasons.push(reasonObject)
         res.redirect('/evidence')

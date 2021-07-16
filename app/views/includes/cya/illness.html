@@ -151,6 +151,26 @@ actions: {
 items: [infoChange]
 }
 },
+key: {
+text: "Your name"
+},
+value: {
+html: reason.userName
+},
+actions: {
+items: [infoChange]
+}
+},
+key: {
+text: "Further information"
+},
+value: {
+html: reason.illnessInformation | safe | nl2br
+},
+actions: {
+items: [infoChange]
+}
+},
 documents
 ]
 }) }}
