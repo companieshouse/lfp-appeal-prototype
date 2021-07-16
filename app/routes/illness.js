@@ -754,6 +754,7 @@ module.exports = function (router) {
       res.render('illness/illness-information', {
         id: id,
         info: info,
+        userName: userName,
         scenario: req.session.scenario,
         reason: reasonObject
       })
