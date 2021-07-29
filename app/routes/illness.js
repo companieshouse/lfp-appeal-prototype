@@ -782,6 +782,7 @@ module.exports = function (router) {
       errName.text = 'Enter your name'
       errName.href = '#user-name'
       errName.flag = true
+      errorList.push(errName)
     }
     if (Err.flag) {
       errorList.push(Err)
