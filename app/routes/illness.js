@@ -768,6 +768,7 @@ module.exports = function (router) {
     var editId = req.body.editId
     var errorFlag = false
     var Err = {}
+    var errName ={}
     var errorList = []
 
     if (illnessInformation === '') {
@@ -777,10 +778,10 @@ module.exports = function (router) {
       Err.flag = true
     }
     if (userName === '') {
-      Err.type = 'blank'
-      Err.text = 'Enter your name'
-      Err.href = '#userName'
-      Err.flag = true
+      errName.type = 'blank'
+      errName.text = 'Enter your name'
+      errName.href = '#user-name'
+      errName.flag = true
     }
     if (Err.flag) {
       errorList.push(Err)

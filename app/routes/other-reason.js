@@ -41,14 +41,14 @@ module.exports = function (router) {
 
     if (userName === '') {
       errName.type = 'blank'
-      errName.text = 'You must tell us your name'
+      errName.text = 'Enter your name'
       errName.href = '#user-name'
       errName.flag = true
       errorList.push(errName)
     }
     if (userRelationship === '') {
       errRelationship.type = 'blank'
-      errRelationship.text = 'You must tell us your relationship to the company'
+      errRelationship.text = 'Enter your relationship to the company'
       errRelationship.href = '#user-relationship'
       errRelationship.flag = true
       errorList.push(errRelationship)
