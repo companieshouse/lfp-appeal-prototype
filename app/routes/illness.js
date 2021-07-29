@@ -771,12 +771,7 @@ module.exports = function (router) {
     var errName ={}
     var errorList = []
 
-    if (illnessInformation === '') {
-      Err.type = 'blank'
-      Err.text = 'You must tell us how this affected your ability to file on time'
-      Err.href = '#illness-information'
-      Err.flag = true
-    }
+
     if (userName === '') {
       errName.type = 'blank'
       errName.text = 'Enter your name'
@@ -793,6 +788,13 @@ module.exports = function (router) {
         errorList: errorList,
         errName: errName
       })
+      
+      if (illnessInformation === '') {
+        Err.type = 'blank'
+        Err.text = 'You must tell us how this affected your ability to file on time'
+        Err.href = '#illness-information'
+        Err.flag = true
+      }
     if (Err.flag) {
       errorList.push(Err)
       errorFlag = true
