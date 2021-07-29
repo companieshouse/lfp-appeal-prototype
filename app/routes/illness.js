@@ -792,7 +792,7 @@ module.exports = function (router) {
         Err: Err,
         userName: userName,
         illnessInformation: illnessInformation
-      })
+      
     } else {
       if (req.body.editId !== '') {
         req.session.appealReasons[editId].illnessInformation = illnessInformation
