@@ -776,6 +776,12 @@ module.exports = function (router) {
       Err.href = '#illness-information'
       Err.flag = true
     }
+    if (userName === '') {
+      Err.type = 'blank'
+      Err.text = 'Enter your name'
+      Err.href = '#userName'
+      Err.flag = true
+    }
     if (Err.flag) {
       errorList.push(Err)
       errorFlag = true
