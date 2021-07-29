@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-  Add documents to support your application
+  Upload documents to support your application
 {% endblock %}
 
 {% block backLink %}
@@ -54,9 +54,9 @@
 
         {% set uploadText %}
         {% if evidence.length > 0 %}
-          Add another document
+          Upload another document
         {% else %}
-          Add a document
+          Upload a document
         {% endif %}
         {% endset -%}
         <div class='file-upload'>
