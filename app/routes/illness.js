@@ -784,6 +784,15 @@ module.exports = function (router) {
       errName.flag = true
       errorList.push(errName)
     }
+    if (errName.flag) {
+      errorList.push(errName)
+      errorFlag = true
+    }
+    if (errorFlag === true) {
+      res.render('illness/illness-information', {
+        errorList: errorList,
+        errName: errName
+      })
     if (Err.flag) {
       errorList.push(Err)
       errorFlag = true
