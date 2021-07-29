@@ -787,12 +787,13 @@ module.exports = function (router) {
         errorList.push(Err)
       }
     if (errorList.length > 0) {
+      res.render('illness/illness-information', {
         errorList: errorList,
         errName: errName,
         Err: Err,
         userName: userName,
         illnessInformation: illnessInformation
-      
+      })
     } else {
       if (req.body.editId !== '') {
         req.session.appealReasons[editId].illnessInformation = illnessInformation
