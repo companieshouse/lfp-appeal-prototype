@@ -59,6 +59,8 @@
 </details>
 {% endset %}
 
+        {% if nameErr.flag %}
+
         {{ govukInput({
           id: "user-name",
           name: "userName",
@@ -68,6 +70,17 @@
           },
           value: userName
         }) }}
+        {% else %}
+        {{ govukInput({
+          id: "user-name",
+          name: "userName",
+          errorMessage: nameError,
+          label: {
+            text: "Your name"
+          },
+          value: userName
+        }) }}
+        {% endif %}
         {% if Err.flag %}
           {{ govukTextarea({
               name: "illnessInformation",
@@ -83,6 +96,7 @@
               }
             }) }}
         {% else %}
+
           {{ govukTextarea({
               name: "illnessInformation",
               id: "illness-information",
