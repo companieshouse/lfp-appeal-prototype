@@ -779,30 +779,19 @@ module.exports = function (router) {
       errName.flag = true
       errorList.push(errName)
     }
-    if (errName.flag) {
-      errorList.push(errName)
-      errorFlag = true
-    }
-    if (errorFlag === true) {
-      res.render('illness/illness-information', {
-        errorList: errorList,
-        errName: errName
-      })
-      
       if (illnessInformation === '') {
         Err.type = 'blank'
         Err.text = 'You must tell us how this affected your ability to file on time'
         Err.href = '#illness-information'
         Err.flag = true
+        errorList.push(Err)
       }
-    if (Err.flag) {
-      errorList.push(Err)
-      errorFlag = true
-    }
-    if (errorFlag === true) {
-      res.render('illness/illness-information', {
+    if (errorList.length > 0) {
         errorList: errorList,
-        Err: Err
+        errName: errName,
+        Err: Err,
+        userName: userName,
+        illnessInformation: illnessInformation
       })
     } else {
       if (req.body.editId !== '') {
