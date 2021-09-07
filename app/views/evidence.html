@@ -4,7 +4,7 @@
   {% if errorList.length > 0 %}
     Error:
   {% endif %}
-  Add documents to support your application
+  Upload documents to support your application
 {% endblock %}
 
 {% block backLink %}
@@ -46,7 +46,7 @@
               errorMessage: supportingEvidenceError,
               fieldset: {
                 legend: {
-                  text: 'Do you want to add documents to support your application?',
+                  text: 'Do you want to upload documents to support your application?',
                   isPageHeading: true,
                   classes: 'govuk-fieldset__legend--xl'
                 }
@@ -69,7 +69,7 @@
         {{ govukButton({
               text: "Continue"
             }) }}
-        
+
       </form>
     </div>
   </div>
