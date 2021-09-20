@@ -351,82 +351,12 @@ module.exports = function (router) {
     }
   })
   router.get('/remove-document', function (req, res) {
-    var documentID = req.query.documentID
-    var reasonID = req.query.reasonID
-    var reasonObject = {}
-
-    if (reasonID === '') {
-      reasonObject = req.session.appealReasons.pop()
-      req.session.appealReasons.push(reasonObject)
-    } else {
-      reasonObject = req.session.appealReasons[reasonID]
-    }
-
-    res.render('remove-document', {
-      documentID: documentID,
-      reasonID: reasonID,
-      fileName: reasonObject.documents[documentID]
-    })
+    res.render('remove-document')
   })
   router.post('/remove-document', function (req, res) {
-    var documentID = req.body.documentID
-    var reasonID = req.body.reasonID
-    var reasonObject = {}
-    var removeDocument = req.body.removeDocument
-    var errorFlag = false
-    var Err = {}
-    var errorList = []
 
-    if (reasonID === '') {
-      reasonObject = req.session.appealReasons.pop()
-    } else {
-      reasonObject = req.session.appealReasons[reasonID]
-    }
+      res.render('remove-document')
 
-    if (typeof removeDocument === 'undefined') {
-      Err.type = 'blank'
-      Err.text = 'You must tell us if you want to remove the document'
-      Err.href = '#remove-document-1'
-      Err.flag = true
-    }
-    if (Err.flag) {
-      errorList.push(Err)
-      errorFlag = true
-    }
-    if (errorFlag === true) {
-      if (reasonID === '') {
-        req.session.appealReasons.push(reasonObject)
-      }
-      res.render('remove-document', {
-        errorList: errorList,
-        Err: Err,
-        documentID: documentID,
-        reasonID: reasonID,
-        fileName: reasonObject.documents[documentID]
-      })
-    } else {
-      switch (removeDocument) {
-        case 'yes':
-          if (reasonID === '') {
-            reasonObject.documents.splice(documentID, 1)
-            req.session.appealReasons.push(reasonObject)
-          } else {
-            reasonObject.documents.splice(documentID, 1)
-            req.session.appealReasons[reasonID] = reasonObject
-          }
-          break
-        case 'no':
-          if (reasonID === '') {
-            req.session.appealReasons.push(reasonObject)
-          }
-          break
-      }
-      if (reasonID === '') {
-        res.redirect('/evidence-upload')
-      } else {
-        res.redirect('/evidence-upload?id=' + reasonID)
-      }
-    }
   })
   router.get('/accountsnotdue', function (req, res) {
     res.render('accountsnotdue', {
