@@ -14,24 +14,10 @@
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="post">
 
-        {% if errorList.length > 0 %}
-          {{ govukErrorSummary({
-              titleText: "There is a problem",
-              errorList: errorList
-            }) }}
-        {% endif %}
-
-        {% if errorList.length > 0 %}
-          {% set Err = {
-            text: Err.text
-          } %}
-        {% else %}
-          {% set Err = false %}
-        {% endif %}
 
         {% set fileNameTitle %}
         Are you sure you want to remove
-        {{fileName}}?
+        BPLinsurance.pdf?
         {% endset -%}
 
         {{ govukRadios({
@@ -58,19 +44,6 @@
           ]
         }) }}
 
-        {{ govukInput({
-          id: "document-ID",
-          name: "documentID",
-          type: "hidden",
-          value: documentID
-        }) }}
-
-        {{ govukInput({
-          id: "reason-ID",
-          name: "reasonID",
-          type: "hidden",
-          value: reasonID
-        }) }}
 
         {{ govukButton({ text: "Continue" }) }}
       </form>
