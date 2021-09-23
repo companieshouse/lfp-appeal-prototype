@@ -39,7 +39,10 @@
 
 
                   {% set docHTML %}
-                    <p>If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal.</p>
+                    <p><ul class="govuk-list govuk-list--bullet">
+                    <li>insurance.doc</li>
+                    <li>hospital note.pdf</li>
+                  </p>
                   {% endset %}
 
         {{ govukRadios({
@@ -49,7 +52,7 @@
           errorMessage: Err,
           fieldset: {
             legend: {
-              text: "Do you want to change your reason for appealing?",
+              text: "Do you want to use your previously uploaded documents for this appeal?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
               }
