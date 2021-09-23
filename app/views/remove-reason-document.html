@@ -47,6 +47,9 @@
               text: "Do you want to change this reason?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
+            },
+            hint: {
+              html: docHTML
             }
           },
           items: [
@@ -61,10 +64,10 @@
           ]
         }) }}
 
-          {{ govukInsetText({
+          {% set docHTML %}
             text: "If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal."
-          }) }}
-      
+          {% endset %}
+
 
 
         {{ govukInput({
