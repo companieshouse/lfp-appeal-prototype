@@ -39,7 +39,10 @@
 
 
                   {% set docHTML %}
-                    <p>If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal.</p>
+                    {{ govukWarningText({
+                      text: If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal.</p>
+                      iconFallbackText: "Warning"
+                      }) }}
                   {% endset %}
 
         {{ govukRadios({

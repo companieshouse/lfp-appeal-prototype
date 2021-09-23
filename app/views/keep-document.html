@@ -39,11 +39,12 @@
 
 
                   {% set docHTML %}
+
                     <ul class="govuk-list govuk-list--bullet">
                     <li>insurance.doc</li>
                     <li>hospital note.pdf</li>
                     <ul>
-
+<p>If you select 'no', the documents will be removed from your appeal application.</p>
                   {% endset %}
 
         {{ govukRadios({
@@ -53,7 +54,7 @@
           errorMessage: Err,
           fieldset: {
             legend: {
-              text: "Do you want to use your previously uploaded documents for this appeal?",
+              text: "Do you want to use the uploaded documents for this appeal?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
               }
