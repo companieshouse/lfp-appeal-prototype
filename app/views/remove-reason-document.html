@@ -37,6 +37,11 @@
           {% endif %}
         {% endif %}
 
+
+                  {% set docHTML %}
+                    text: "If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal."
+                  {% endset %}
+
         {{ govukRadios({
           classes: "govuk-radios--inline",
           idPrefix: "change-reason",
@@ -44,13 +49,13 @@
           errorMessage: Err,
           fieldset: {
             legend: {
-              text: "Do you want to change this reason?",
+              text: "Do you want to change your reason for appealing?",
               isPageHeading: true,
               classes: "govuk-fieldset__legend--xl"
+              }
             },
             hint: {
               html: docHTML
-            }
           },
           items: [
             {
@@ -63,10 +68,6 @@
             }
           ]
         }) }}
-
-          {% set docHTML %}
-            text: "If you change your reason for appealing, the documents you have uploaded will be removed, and will not be considered as part of your appeal."
-          {% endset %}
 
 
 
