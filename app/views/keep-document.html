@@ -38,43 +38,39 @@
         {% endif %}
 
 
-                  {% set docHTML %}
 
-                    <ul class="govuk-list govuk-list--bullet">
-                    <li>insurance.doc</li>
-                    <li>hospital note.pdf</li>
-                    </ul>
-<p>If you select 'no', the documents will be removed from your appeal application.</p>
-                  {% endset %}
-
-        {{ govukRadios({
-          classes: "govuk-radios--inline",
-          idPrefix: "change-reason",
-          name: "changeReason",
-          errorMessage: Err,
+        {{ govukCheckboxes({
+          idPrefix: "waste",
+          name: "waste",
           fieldset: {
             legend: {
-              text: "Do you want to use the uploaded documents for this appeal?",
+              text: "Which documents would you like to include in your appeal?",
               isPageHeading: true,
-              classes: "govuk-fieldset__legend--xl"
-              }
-            },
-            hint: {
-              html: docHTML
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "Select all that apply."
           },
           items: [
             {
-              value: "yes",
-              text: "Yes"
+              value: "doctor",
+              text: "DoctorsNote.pdf"
             },
             {
-              value: "no",
-              text: "No"
+              value: "insurance",
+              text: "InsuranceForm.doc"
+            },
+            {
+              divider: "or"
+            },
+            {
+              value: "none",
+              text: "None of the above",
+              behaviour: "exclusive"
             }
           ]
         }) }}
-
-
 
         {{ govukInput({
           id: "id",
@@ -84,6 +80,9 @@
         }) }}
 
         {{ govukButton({ text: "Continue" }) }}
+        {{ govukButton({ text: "Continue without adding documents",
+
+    classes: "govuk-button--secondary" }) }}
       </form>
     </div>
   </div>
