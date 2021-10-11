@@ -58,7 +58,7 @@ module.exports = function (router) {
     }
     if (req.session.penaltyReference === '') {
       penaltyReferenceErr.type = 'blank'
-      penaltyReferenceErr.text = 'You must enter a reference number'
+      penaltyReferenceErr.text = 'You must enter a penalty reference'
       penaltyReferenceErr.href = '#penalty-reference'
       penaltyReferenceErr.flag = true
     }
