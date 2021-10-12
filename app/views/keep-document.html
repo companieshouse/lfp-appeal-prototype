@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block pageTitle %}
-  Remove this reason for appeal
+  Review uploaded documents
 {% endblock %}
 {% block backLink %}
   {{ govukBackLink({
@@ -12,77 +12,40 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action="" method="post">
+      <form action="evidence-upload" method="post">
 
-        {% if errorList.length > 0 %}
-          {{ govukErrorSummary({
-                titleText: "There is a problem",
-                errorList: errorList
-              }) }}
-        {% endif %}
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <h1 class="govuk-fieldset__heading">
+              Do you want to change the selection of documents that have been uploaded for this appeal?
+              </h1>
+            </legend>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>Insurance.doc</li>
+              <li>hospital-note.pdf</li>
+              </ul>
+            <div class="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="documents-yes" name="documents" type="radio" value="yes">
+                <label class="govuk-label govuk-radios__label" for="documents-yes">
+                  Yes, I want to remove documents or upload new ones
+                </label>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="documents-no" name="documents" type="radio" value="no">
+                <label class="govuk-label govuk-radios__label" for="documents-no">
+                  No, I want to continue with only these documents
+                </label>
+              </div>
+            </div>
 
-        {% if errorList.length > 0 %}
-          {% set Err = {
-            text: Err.text
-          } %}
-        {% else %}
-          {% set Err = false %}
-        {% endif %}
+          </fieldset>
+        </div>
 
-        {% if errorList.length > 0 %}
-          {% if Err.type === 'invalid' %}
-            {% set otherReasonError = true %}
-          {% else %}
-            {% set otherReasonError = false %}
-          {% endif %}
-        {% endif %}
-
-
-
-        {{ govukCheckboxes({
-          idPrefix: "waste",
-          name: "waste",
-          fieldset: {
-            legend: {
-              text: "Which documents would you like to include in your appeal?",
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          hint: {
-            text: "Select all that apply."
-          },
-          items: [
-            {
-              value: "doctor",
-              text: "DoctorsNote.pdf"
-            },
-            {
-              value: "insurance",
-              text: "InsuranceForm.doc"
-            },
-            {
-              divider: "or"
-            },
-            {
-              value: "none",
-              text: "None of the above",
-              behaviour: "exclusive"
-            }
-          ]
-        }) }}
-
-        {{ govukInput({
-          id: "id",
-          name: "id",
-          type: "hidden",
-          value: id
-        }) }}
 
         {{ govukButton({ text: "Continue" }) }}
-        {{ govukButton({ text: "Continue without adding documents",
 
-    classes: "govuk-button--secondary" }) }}
       </form>
     </div>
   </div>
